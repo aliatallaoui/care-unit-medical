@@ -33,7 +33,7 @@
                         <li class="menu-active"><a href="/">Home</a></li>
                         <li><a href="/departments">departments</a></li>
                         <li><a href="/doctors">doctors</a></li>
-                        <li {{--  class="menu-has-children"  --}}><a href="">about us</a>
+                        <li {{--  class="menu-has-children"  --}}><a href="/about">about us</a>
                             {{--  <ul>
                                 <li><a href="/about">about us</a></li>
                                 {{--  <li><a href="/elements">elements</a></li>

@@ -36,6 +36,8 @@ Route::get('/', function () {
 
 });
 
+Route::resource('/', 'PagesController');
+
 
 Route::get('/doctors', function () {
     return view('doctors');
@@ -55,6 +57,8 @@ Route::get('/contact', function () {
     return view('contact');
 
 });
+
+
 
 
 

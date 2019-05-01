@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Our doctors</h1>
-                    <a href="index.html">Home</a> <span>|</span> <a href="doctors.html">Doctors</a>
+                    <a href="/">Home</a> <span>|</span> <a href="/doctors">Doctors</a>
                 </div>
             </div>
         </div>

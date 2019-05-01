@@ -90,6 +90,10 @@ class PagesController extends Controller
 
     }
 
+    public function depart()
+    {
+        return view('departments');
+    }
 
 
 
