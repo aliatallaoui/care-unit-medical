@@ -1,5 +1,6 @@
 @extends('layouts.templete')
 
+
 {{--  <!-- Banner Area Starts -->  --}}
     <section class="banner-area other-page">
         <div class="container">
@@ -16,3 +17,7 @@
 @include('inc.Specialist')
 
 @include('inc.hotline')
+
+{{--  <!-- News Area Starts -->  --}}
+@include('inc.news')
+{{--  <!-- News Area Starts -->  --}}

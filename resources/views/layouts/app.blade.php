@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @include('inc.head')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,8 +21,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    {{--  @include('inc.header')  --}}
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        @include('inc.header')
+        <br><br><br><br><br>
+        {{--  <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -70,12 +74,13 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>  --}}
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    @include('inc.scripts')
 </body>
 </html>
 

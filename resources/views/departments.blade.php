@@ -1,6 +1,18 @@
 @extends('layouts.templete')
 
-@include('inc.banner')
+{{--  <!-- Banner Area Starts -->  --}}
+    <section class="banner-area other-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Departments</h1>
+                    <a href="index.html">Home</a> <span>|</span> <a href="departments.html">Departments</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{{--      <!-- Banner Area End -->  --}}
+
 
 @include('inc.feature')
 

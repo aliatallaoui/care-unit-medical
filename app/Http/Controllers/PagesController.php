@@ -26,7 +26,7 @@ class PagesController extends Controller
      */
     public function create()
     {
-        //
+        return "this is pages create ";
     }
 
     /**
@@ -37,7 +37,8 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "this is pages store ";
+
     }
 
     /**
@@ -48,7 +49,8 @@ class PagesController extends Controller
      */
     public function show($id)
     {
-        //
+        return "this is pages show ";
+
     }
 
     /**
@@ -59,7 +61,8 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return "this is pages edit ";
+
     }
 
     /**
@@ -71,7 +74,8 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return "this is pages update ";
+
     }
 
     /**
@@ -82,7 +86,8 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return "this is pages destroy ";
+
     }
 
 
