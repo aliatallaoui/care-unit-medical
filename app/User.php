@@ -1,7 +1,11 @@
 <?php
 
 namespace App;
+use App\Role;
+use App\Photo;
 
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','photo_id','role_id','isActive'
     ];
 
     /**
@@ -36,4 +40,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
+
+    public function isAdmin()
+    {
+        $user = $this;
+        if($user->role->name = 'Admin'){
+            return true;
+        }
+        return false ;
+
+    }
+
+
+    public function photo()
+    {
+        return $this->belongsTo('App\Photo');
+    }
+
+
 }

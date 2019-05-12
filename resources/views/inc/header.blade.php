@@ -47,7 +47,13 @@
                             </ul>
                         </li>  --}}
                         <li><a href="/contact">Contact</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li>
+                            @if (Auth::check())
+                            <a href="admin/users">{{ Auth::user()->name }}</a>
+                            @else
+                            <a href="/login">Login</a>
+                        @endif
+                        </li>
                     </ul>
                 </nav>{{--  <!-- #nav-menu-container -->  --}}
                 </div>

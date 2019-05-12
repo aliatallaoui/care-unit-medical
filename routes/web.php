@@ -36,7 +36,9 @@ Route::get('/', function () {
 
 });
 
-Route::resource('/', 'PagesController');
+
+
+
 
 
 Route::get('/doctors', function () {
@@ -55,6 +57,16 @@ Route::get('/about', function () {
 });
 Route::get('/contact', function () {
     return view('contact');
+
+});
+
+
+
+Route::group(['middleware' => ['Admin']], function () {
+
+    Route::get('/admin',['as'=>'admin.index','uses'=>'AdminUsersController@index']);
+
+    Route::resource('admin/users', 'AdminUsersController');
 
 });
 
