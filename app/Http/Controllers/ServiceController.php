@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Service;
+use App\Specialite;
+use App\RendezVous;
+use App\Photo;
 use Illuminate\Http\Request;
+use App\Http\Requests\ServicesRequest;
+use Illuminate\Support\Facades\Session;
+
 
 class ServiceController extends Controller
 {
@@ -14,7 +20,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $services = Service::all();
+        return view('admin.services.index',compact('services','rendes'));
     }
 
     /**
@@ -22,9 +31,10 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+
+
     }
 
     /**
@@ -33,9 +43,29 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServicesRequest $request)
     {
-        //
+        $input = $request->all();
+
+        if ($file = $request->file('photo_id')) {
+
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file' => $name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+
+        Service::create($input);
+        Session::flash('create_service', 'Create of service succsusful');
+
+
+        /* User::create($request->all()); */
+        return redirect('admin/services');
+        // return $request->all();
     }
 
     /**
@@ -57,7 +87,9 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        $rendes = RendezVous::all();
+
+        return view('admin.services.edit',compact('service','rendes'));
     }
 
     /**
@@ -67,9 +99,29 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(ServicesRequest $request, Service $service)
     {
         //
+         $input = $request->all();
+
+        if ($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file' => $name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+
+        $service->update($input);
+        Session::flash('update_service', 'updated Of service succsusful');
+
+        /* User::create($request->all()); */
+        return redirect('admin/services');
+
+
     }
 
     /**
@@ -81,5 +133,16 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         //
+        $service = Service::findOrfail($service->id);
+
+        /* unlink(public_path().$user->photo->file); */
+
+        $service->delete();
+
+        Session::flash('delete_service', 'deleted of service succsusful');
+
+        return redirect('/admin/services');
+
+
     }
 }

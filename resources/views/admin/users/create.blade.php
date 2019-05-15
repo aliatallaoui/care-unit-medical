@@ -53,7 +53,7 @@
                 <div class="form-group {{ $errors->get('isActive') ? 'has-error' : 'has-success' }}">
                     {!! Form::label('isActive', 'Status:', ['class'=>'control-label col-lg-2']) !!}
                     <div class="col-lg-10">
-                        {!! Form::select('isActive', [''=>'choose options','0'=>'Active','1'=>'not Active'], null,
+                        {!! Form::select('isActive', [''=>'choose options','1'=>'Active','0'=>'not Active'], null,
                         ['class'=>'form-control']) !!}
                         @if ($errors)
                         @foreach ($errors->get('isActive') as $message)

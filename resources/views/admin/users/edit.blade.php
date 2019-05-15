@@ -20,12 +20,10 @@
         <div class="form-panel">
             {!! Form::model($user,['method'=>'DELETE','action'=>['AdminUsersController@destroy',$user->id],'class'=>'']) !!}
                 <div class="form-group">
-            <h3 class="text-center "><i class="fa fa-user"></i> Edit User {!! Form::submit('Delete', ['class'=>'btn btn-danger pull-right ']) !!}</h3>
-
-
+                    <h3 class="text-center "><i class="fa fa-user"></i> Edit User {!! Form::submit('Delete', ['class'=>'btn btn-danger pull-right ']) !!}</h3>
                 </div>
 
-                {!! Form::close() !!}
+            {!! Form::close() !!}
             <br>
 
             <div class="form">
@@ -62,7 +60,7 @@
                 <div class="form-group {{ $errors->get('isActive') ? 'has-error' : 'has-success' }}">
                     {!! Form::label('isActive', 'Status:', ['class'=>'control-label col-lg-2']) !!}
                     <div class="col-lg-10">
-                        {!! Form::select('isActive', [''=>'choose options','0'=>'Active','1'=>'not Active'], null,
+                        {!! Form::select('isActive', [''=>'choose options','1'=>'Active','0'=>'not Active'], null,
                         ['class'=>'form-control']) !!}
                         @if ($errors)
                         @foreach ($errors->get('isActive') as $message)

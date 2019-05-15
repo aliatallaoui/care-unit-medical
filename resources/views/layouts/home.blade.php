@@ -17,7 +17,7 @@
     {{--  <!-- Department Area Starts -->  --}}
 
     {{--  <!-- Patient Area Starts -->  --}}
-    @include('inc.patient')
+    {{--  @include('inc.patient')  --}}
     {{--  <!-- Patient Area Starts -->  --}}
 
     {{--  <!-- Specialist Area Starts -->  --}}

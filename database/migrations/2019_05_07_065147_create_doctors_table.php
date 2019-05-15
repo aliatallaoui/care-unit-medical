@@ -16,11 +16,11 @@ class CreateDoctorsTable extends Migration
         Schema::enableForeignKeyConstraints();
         Schema::create('doctors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100)->nullable()->default('text');
-            $table->string('phone_number', 100)->nullable()->index()->default('text');
-            $table->bigInteger('specialite_id')->nullable()->index()->default(12);
-            $table->bigInteger('photo_id')->nullable()->index()->default(12);
-            $table->string('etat', 100)->nullable()->default('text');
+            $table->string('name', 100)->nullable()->default('Name doctor');
+            $table->string('phone_number', 100)->nullable()->index()->default('Phone Number');
+            $table->bigInteger('specialite_id')->nullable()->index()->default(0);
+            $table->bigInteger('photo_id')->nullable()->index()->default(0);
+            $table->integer('etat')->unsigned()->nullable()->default(0);
             //$table->bigInteger('departement_id')->nullable()->default(12);
             $table->timestamps();
         });

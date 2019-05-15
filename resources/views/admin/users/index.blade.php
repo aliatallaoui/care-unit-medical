@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Admin Users</h1>
+
+
+
+
+
+
     @if ($users)
     <div class="row mt">
         <div class="col-md-12">
@@ -37,11 +43,11 @@
                             <td><a href="{{ route('users.edit',$user->id) }}">{{ $user->name }}</a></td>
                             <td><b>{{ $user->email }}</b></td>
                             <td>{{ $user->role->name }}</td>
-                            <td><strong><span class="label label-{{ $user->isActive == 1 ? 'success' : 'danger' }} label-large">{{ $user->isActive == 1 ? 'Acive' : 'not Active' }}</span></strong></td>
+                            <td><strong><span class="btn btn-{{ $user->isActive == 1 ? 'success' : 'danger' }} btn-xs">{{ $user->isActive == 1 ? 'Acive' : 'not Active' }}</span></strong></td>
                             <td>
                                 {{-- <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a> --}}
 
-                                <a href="{{ route('users.edit',$user->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                <a href="{{ route('users.edit',$user->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Edit</a>
                                 {{-- <a href="{{ route('users.destroy',$user->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a> --}}
                             </td>
                             <td>{{ $user->created_at->diffForHumans() }}</td>
@@ -53,7 +59,11 @@
               </table>
             </div>
             <!-- /content-panel -->
-
+              {{-- <a id="add-regular" class="btn btn-default btn-sm" href="javascript:;">Regular</a>
+              <a id="add-sticky" class="btn btn-success  btn-sm" href="javascript:;">Sticky</a>
+              <a id="add-without-image" class="btn btn-info  btn-sm" href="javascript:;">Imageless</a>
+              <a id="add-gritter-light" class="btn btn-warning  btn-sm" href="javascript:;">Light</a>
+              <a id="remove-all" class="btn btn-danger  btn-sm" href="general.html#">Remove all</a> --}}
         </div>
         <!-- /col-md-12 -->
         @else

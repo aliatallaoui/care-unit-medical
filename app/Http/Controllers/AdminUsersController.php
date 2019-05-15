@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use App\Photo;
+use App\RendezVous;
+
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUsersRequest;
-use App\Http\Controllers\Session;
+use Illuminate\Support\Facades\Session;
 
 
 class AdminUsersController extends Controller
@@ -20,7 +23,10 @@ class AdminUsersController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users.index',compact('users'));
+        $rendes = RendezVous::all();
+
+
+        return view('admin.users.index',compact('users','rendes'));
     }
 
     /**
@@ -30,8 +36,10 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
+
+        $rendes = RendezVous::all();
         $roles = Role::pluck('name', 'id')->all();
-        return view('admin.users.create',compact('roles'));
+        return view('admin.users.create',compact('roles','rendes'));
     }
 
     /**
@@ -47,7 +55,7 @@ class AdminUsersController extends Controller
             $input = $request->except('password');
         } else {
             $input = $request->all();
-            $input['password'] = bcrypt($request->password);
+            $input['password'] = Hash::make($request->password);
         }
 
         if ($file = $request->file('photo_id')) {
@@ -88,9 +96,10 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
+        $rendes = RendezVous::all();
         $roles = Role::pluck('name', 'id')->all();
         $user = User::findOrfail($id);
-        return view('admin.users.edit',compact('user','roles'));
+        return view('admin.users.edit',compact('user','roles','rendes'));
     }
 
     /**

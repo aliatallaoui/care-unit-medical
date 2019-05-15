@@ -3,7 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Doctor;
+use App\Photo;
+use App\RendezVous;
+use App\Specialite;
 use Illuminate\Http\Request;
+use App\Http\Requests\DoctorsRequest;
+use Illuminate\Support\Facades\Session;
+
+
 
 class DoctorController extends Controller
 {
@@ -14,7 +21,10 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $doctors = Doctor::all();
+        return view('admin.doctors.index', compact('doctors','rendes'));
     }
 
     /**
@@ -24,7 +34,11 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $specialites = Specialite::pluck('name', 'id')->all();
+        return view('admin.doctors.create', compact('specialites','rendes'));
+
     }
 
     /**
@@ -33,9 +47,29 @@ class DoctorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DoctorsRequest $request)
     {
-        //
+
+         $input = $request->all();
+
+        if ($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file' => $name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+
+        Doctor::create($input);
+        Session::flash('create_doctor', 'Created Of Doctors succsusful');
+
+        /* User::create($request->all()); */
+        return redirect('admin/doctors');
+        // return $request->all();
+
     }
 
     /**
@@ -46,7 +80,9 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
+        $rendes = RendezVous::all();
+
+        return view('admin.doctors.show',compact('doctor','rendes'));
     }
 
     /**
@@ -57,7 +93,12 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $rendes = RendezVous::all();
+
+        $specialites = Specialite::pluck('name', 'id')->all();
+        $doctor = Doctor::findOrfail($doctor->id);
+        return view('admin.doctors.edit', compact('doctor','specialites','rendes'));
+
     }
 
     /**
@@ -67,9 +108,27 @@ class DoctorController extends Controller
      * @param  \App\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(DoctorsRequest $request, Doctor $doctor)
     {
-        //
+        $doctor = Doctor::findOrfail($doctor->id);
+
+        $input = $request->all();
+
+        if ($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+        $doctor->update($input);
+        Session::flash('update_doctor', 'Updated of doctor succsusful');
+
+
+        return redirect('/admin/doctors');
+
     }
 
     /**
@@ -80,6 +139,15 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor = Doctor::findOrfail($doctor->id);
+
+        /* unlink(public_path().$user->photo->file); */
+
+        $doctor->delete();
+
+        Session::flash('delete_doctor', 'Delete of doctor succsusful');
+
+        return redirect('/admin/doctors');
+
     }
 }

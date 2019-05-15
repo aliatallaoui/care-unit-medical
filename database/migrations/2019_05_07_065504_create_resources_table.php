@@ -17,7 +17,7 @@ class CreateResourcesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100)->nullable()->default('text');
             $table->integer('stock')->unsigned()->nullable()->default(0);
-            $table->string('etat', 100)->nullable()->default('text');
+            $table->integer('etat')->unsigned()->nullable()->default(0);
             $table->timestamps();
         });
     }

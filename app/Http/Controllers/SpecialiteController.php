@@ -1,9 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\RendezVous;
 use App\Specialite;
 use Illuminate\Http\Request;
+use App\Http\Requests\AdminSpecialitesRequest;
+use Illuminate\Support\Facades\Session;
+
+
+
+
 
 class SpecialiteController extends Controller
 {
@@ -14,7 +20,9 @@ class SpecialiteController extends Controller
      */
     public function index()
     {
-        //
+        $rendes = RendezVous::all();
+        $specialites = Specialite::all();
+        return view('admin.specialites.index',compact('specialites','rendes'));
     }
 
     /**
@@ -24,7 +32,10 @@ class SpecialiteController extends Controller
      */
     public function create()
     {
-        //
+        $rendes = RendezVous::all();
+        $specialites = Specialite::all();
+        return view('admin.specialites.index', compact('specialites','rendes'));
+
     }
 
     /**
@@ -33,9 +44,12 @@ class SpecialiteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminSpecialitesRequest $request)
     {
-        //
+
+        Specialite::create($request->all());
+        Session::flash('create_specialite', 'Create of Specialite succsusful');
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +69,13 @@ class SpecialiteController extends Controller
      * @param  \App\Specialite  $specialite
      * @return \Illuminate\Http\Response
      */
-    public function edit(Specialite $specialite)
+    public function edit($id)
     {
-        //
+        $rendes = RendezVous::all();
+
+        $specialites = Specialite::all();
+        $specialite = Specialite::findOrfail($id);
+        return view('admin.specialites.edit', compact('specialite','specialites','rendes'));
     }
 
     /**
@@ -69,7 +87,13 @@ class SpecialiteController extends Controller
      */
     public function update(Request $request, Specialite $specialite)
     {
-        //
+        $rendes = RendezVous::all();
+
+        Specialite::findOrfail($specialite->id)->update($request->all());
+        $specialites = Specialite::all();
+        Session::flash('updated_specialite', 'update of Specialite succsusful');
+        return view('admin.specialites.index', compact('specialites','rendes'));
+
     }
 
     /**
@@ -80,6 +104,11 @@ class SpecialiteController extends Controller
      */
     public function destroy(Specialite $specialite)
     {
-        //
+
+        Specialite::findOrfail($specialite->id)->delete();
+        $specialites = Specialite::all();
+        Session::flash('delete_specialite', 'delete of Specialite succsusful');
+        return redirect('admin/specialites');
+
     }
 }

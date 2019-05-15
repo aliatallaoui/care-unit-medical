@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\RendezVous;
 use App\Resource;
 use Illuminate\Http\Request;
+use App\Http\Requests\ResourceRequest;
+use Illuminate\Support\Facades\Session;
+
 
 class ResourceController extends Controller
 {
@@ -14,7 +17,10 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $resources = Resource::all();
+        return view('admin.resources.index', compact('resources','rendes'));
     }
 
     /**
@@ -24,7 +30,11 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $resources = Resource::all();
+        return view('admin.resources.index', compact('resources','rendes'));
+
     }
 
     /**
@@ -33,9 +43,19 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ResourceRequest $request)
     {
-        //
+        $resource = $request->all();
+        if ($request->stock > 0) {
+            $resource['etat'] = 0;
+        }else{
+            $resource['etat'] = 1;
+        }
+        Resource::create($resource);
+        Session::flash('create_resource', 'Create of service succsusful');
+        return redirect()->back();
+
+
     }
 
     /**
@@ -57,7 +77,10 @@ class ResourceController extends Controller
      */
     public function edit(Resource $resource)
     {
-        //
+        $rendes = RendezVous::all();
+
+        $resources = Resource::all();
+        return view('admin.resources.edit', compact('resource','resources','rendes'));
     }
 
     /**
@@ -67,9 +90,21 @@ class ResourceController extends Controller
      * @param  \App\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(ResourceRequest $request, Resource $resource)
     {
-        //
+        $resourceupdate = $request->all();
+        if ($request->stock > 0) {
+            $resourceupdate['etat'] = 0;
+        } else {
+            $resourceupdate['etat'] = 1;
+        }
+
+        Resource::findOrfail($resource->id)->update($resourceupdate);
+        $resources = Resource::all();
+        Session::flash('update_resource', 'update of resource succsusful');
+        return redirect('admin/resources');
+
+
     }
 
     /**
@@ -80,6 +115,11 @@ class ResourceController extends Controller
      */
     public function destroy(Resource $resource)
     {
-        //
+        Resource::findOrfail($resource->id)->delete();
+        $resources = Resource::all();
+        Session::flash('delete_resource', 'delete of resource succsusful');
+        return redirect('admin/resources');
+
+
     }
 }
