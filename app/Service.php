@@ -16,6 +16,15 @@ class Service extends Model
         return $this->belongsTo('App\Photo');
     }
 
+    public function resources()
+    {
+        return $this->belongsToMany('App\Resource','resource_service');
+    }
+
+    public function doctors()
+    {
+        return $this->belongsToMany('App\Doctor','doctor_service');
+    }
 
 
 }

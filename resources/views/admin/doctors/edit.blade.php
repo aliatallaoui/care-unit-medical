@@ -85,6 +85,27 @@
                     </div>
                 </div>
 
+                <div class="form-group {{ $errors->get('service_id') ? 'has-error' : 'has-success' }}">
+                    {!! Form::label('service_id', 'Services:', ['class'=>'control-label col-lg-2']) !!}
+                    <div class="col-lg-10">
+                        {!! Form::select('service_id[]',
+                        $services,
+                         $doctor->services->pluck('id')->toArray(),
+                        ['class'=>'form-control',
+                        'multiple'=>'multiple'
+                        ])
+                        !!}
+                        <span class="help-block">Press <a id="add-without-image" class="btn btn-default  btn-sm" href="javascript:;">ctrl</a> for multiple selection</span>
+                        @if ($errors)
+                        @foreach ($errors->get('service_id') as $message)
+                        @error('service_id')
+                        <div class="help-block">{{ $message }}</div>
+                        @enderror
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+
                 <div class="form-group  {{ $errors->get('photo_id') ? 'has-error' : 'has-success' }} ">
                     <label class="control-label col-md-3">Image Upload</label>
                     <div class="col-md-9">

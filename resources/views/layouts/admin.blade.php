@@ -242,6 +242,16 @@
                     </li>
                     <li class="sub-menu">
                         <a class="" href="javascript:;">
+                            <i class="fa fa-calendar"></i>
+                            <span>RendezVous</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{ route('RendezService.index') }}"><i class="fa fa-cog"></i>Grere les Taches</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="" href="javascript:;">
                             <i class="fa fa-user"></i>
                             <span>Patient</span>
                         </a>
@@ -252,7 +262,7 @@
                     </li>
                     <li class="sub-menu">
                         <a class="" href="javascript:;">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-hospital-o"></i>
                             <span>Doctor</span>
                         </a>
                         <ul class="sub">
@@ -267,12 +277,12 @@
                             <span>Service</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="{{ route('services.index') }}"><i class="fa fa-plus"></i>Add Service</a></li>
+                            <li><a href="{{ route('services.create') }}"><i class="fa fa-plus"></i>Add Service</a></li>
                             <li><a href="{{ route('services.index') }}"><i class="fa fa-plus"></i>All Service</a></li>
-                            <li><a href="{{ route('services.index') }}"><i class="fa fa-cog"></i>Grere les Taches</a></li>
-
                         </ul>
                     </li>
+
+
                     <li class="">
                         <a class="" href="{{ route('resources.index') }}">
                             <i class="fa fa-edit"></i>

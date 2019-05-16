@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Service;
-use App\Specialite;
 use App\RendezVous;
+use App\Doctor;
+use App\Resource;
+
 use App\Photo;
 use Illuminate\Http\Request;
 use App\Http\Requests\ServicesRequest;
@@ -31,9 +33,15 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
+        $rendes = RendezVous::all();
 
+        $doctors = Doctor::pluck('name', 'id')->all();
+        $resources = Resource::pluck('name', 'id')->all();
+
+
+        return view('admin.services.create',compact('rendes','doctors','resources'));
 
     }
 
@@ -59,7 +67,12 @@ class ServiceController extends Controller
         }
 
 
-        Service::create($input);
+        $service = Service::create($input);
+
+        $service->doctors()->sync($request->get('doctor_id'));
+        $service->resources()->sync($request->get('resource_id'));
+
+
         Session::flash('create_service', 'Create of service succsusful');
 
 
@@ -88,8 +101,11 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         $rendes = RendezVous::all();
+        $doctors = Doctor::pluck('name', 'id')->all();
+        $resources = Resource::pluck('name', 'id')->all();
 
-        return view('admin.services.edit',compact('service','rendes'));
+
+        return view('admin.services.edit',compact('service','rendes','doctors','resources'));
     }
 
     /**
@@ -116,6 +132,11 @@ class ServiceController extends Controller
 
 
         $service->update($input);
+
+        $service->doctors()->sync($request->get('doctor_id'));
+        $service->resources()->sync($request->get('resource_id'));
+
+
         Session::flash('update_service', 'updated Of service succsusful');
 
         /* User::create($request->all()); */
@@ -132,10 +153,12 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
-        $service = Service::findOrfail($service->id);
 
         /* unlink(public_path().$user->photo->file); */
+
+        $service->doctors()->detach();
+        $service->resources()->detach();
+
 
         $service->delete();
 
@@ -143,6 +166,19 @@ class ServiceController extends Controller
 
         return redirect('/admin/services');
 
+
+    }
+
+
+    public function gerertache()
+    {
+        $rendes = RendezVous::all();
+
+        $doctors = Doctor::all();
+        $services = Service::all();
+        $resources = Resource::all();
+
+        return view('admin.services.gerertache', compact('doctors','services','resources','rendes'));
 
     }
 }

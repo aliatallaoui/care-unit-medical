@@ -56,6 +56,48 @@
                     </div>
                 </div>
 
+                <div class="form-group {{ $errors->get('doctor_id') ? 'has-error' : 'has-success' }}">
+                    {!! Form::label('doctor_id', 'Doctors:', ['class'=>'control-label col-lg-2']) !!}
+                    <div class="col-lg-10">
+                        {!! Form::select('doctor_id[]',
+                        $doctors,
+                         $service->doctors->pluck('id')->toArray(),
+                        ['class'=>'form-control',
+                        'multiple'=>'multiple'
+                        ])
+                        !!}
+                        <span class="help-block">Press <a id="add-without-image" class="btn btn-default  btn-sm" href="javascript:;">ctrl</a> for multiple selection</span>
+                        @if ($errors)
+                        @foreach ($errors->get('doctor_id') as $message)
+                        @error('doctor_id')
+                        <div class="help-block">{{ $message }}</div>
+                        @enderror
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group {{ $errors->get('resource_id') ? 'has-error' : 'has-success' }}">
+                    {!! Form::label('resource_id', 'resources:', ['class'=>'control-label col-lg-2']) !!}
+                    <div class="col-lg-10">
+                        {!! Form::select('resource_id[]',
+                        $resources,
+                         $service->resources->pluck('id')->toArray(),
+                        ['class'=>'form-control',
+                        'multiple'=>'multiple'
+                        ])
+                        !!}
+                        <span class="help-block">Press <a id="add-without-image" class="btn btn-default  btn-sm" href="javascript:;">ctrl</a> for multiple selection</span>
+                        @if ($errors)
+                        @foreach ($errors->get('resource_id') as $message)
+                        @error('resource_id')
+                        <div class="help-block">{{ $message }}</div>
+                        @enderror
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+
 
 
 

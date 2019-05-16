@@ -53,6 +53,27 @@
 
                 {!! Form::hidden('etat', null,['class'=>'']) !!}
 
+                <div class="form-group {{ $errors->get('service_id') ? 'has-error' : 'has-success' }}">
+                    {!! Form::label('service_id', 'Services:', ['class'=>'control-label col-lg-2']) !!}
+                    <div class="col-lg-10">
+                        {!! Form::select('service_id[]',
+                        $services,
+                         $resource->services->pluck('id')->toArray(),
+                        ['class'=>'form-control',
+                        'multiple'=>'multiple'
+                        ])
+                        !!}
+                        <span class="help-block">Press <a id="add-without-image" class="btn btn-default  btn-sm" href="javascript:;">ctrl</a> for multiple selection</span>
+                        @if ($errors)
+                        @foreach ($errors->get('service_id') as $message)
+                        @error('service_id')
+                        <div class="help-block">{{ $message }}</div>
+                        @enderror
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+
                 {{--  <div class="form-group {{ $errors->get('etat') ? 'has-error' : 'has-success' }}">
                     {!! Form::label('etat', 'Status:', ['class'=>'control-label col-lg-2']) !!}
                     <div class="col-lg-10">

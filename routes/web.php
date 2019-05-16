@@ -89,19 +89,22 @@ Route::group(['middleware' => ['Admin']], function () {
 
 
 
-    Route::get('/admin',['as'=>'admin.index','uses'=>'AdminUsersController@index']);
-
+/*     Route::get('/admin',['as'=>'admin.index','uses'=>'AdminUsersController@index']);
+ */
     Route::resource('admin/users', 'AdminUsersController');
 
     Route::resource('admin/specialites', 'SpecialiteController');
 
     Route::resource('admin/doctors', 'DoctorController');
 
+    Route::resource('admin/RendezService', 'AdminRendezVousController');
+
     Route::resource('admin/services', 'ServiceController');
 
     Route::resource('admin/resources', 'ResourceController');
 
     Route::resource('admin/patients', 'PatientController');
+
 
 
 });

@@ -6,6 +6,8 @@ use App\Doctor;
 use App\Photo;
 use App\RendezVous;
 use App\Specialite;
+use App\Service;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\DoctorsRequest;
 use Illuminate\Support\Facades\Session;
@@ -37,7 +39,9 @@ class DoctorController extends Controller
         $rendes = RendezVous::all();
 
         $specialites = Specialite::pluck('name', 'id')->all();
-        return view('admin.doctors.create', compact('specialites','rendes'));
+        $services = Service::pluck('name', 'id')->all();
+
+        return view('admin.doctors.create', compact('specialites','rendes','services'));
 
     }
 
@@ -49,7 +53,6 @@ class DoctorController extends Controller
      */
     public function store(DoctorsRequest $request)
     {
-
          $input = $request->all();
 
         if ($file = $request->file('photo_id')) {
@@ -63,7 +66,11 @@ class DoctorController extends Controller
         }
 
 
-        Doctor::create($input);
+        $doctor = Doctor::create($input);
+
+        $doctor->services()->sync($request->get('service_id'));
+
+
         Session::flash('create_doctor', 'Created Of Doctors succsusful');
 
         /* User::create($request->all()); */
@@ -94,10 +101,11 @@ class DoctorController extends Controller
     public function edit(Doctor $doctor)
     {
         $rendes = RendezVous::all();
+        $services = Service::pluck('name', 'id')->all();
 
         $specialites = Specialite::pluck('name', 'id')->all();
         $doctor = Doctor::findOrfail($doctor->id);
-        return view('admin.doctors.edit', compact('doctor','specialites','rendes'));
+        return view('admin.doctors.edit', compact('doctor','specialites','rendes','services'));
 
     }
 
@@ -124,6 +132,9 @@ class DoctorController extends Controller
         }
 
         $doctor->update($input);
+
+        $doctor->services()->sync($request->get('service_id'));
+
         Session::flash('update_doctor', 'Updated of doctor succsusful');
 
 
@@ -142,6 +153,8 @@ class DoctorController extends Controller
         $doctor = Doctor::findOrfail($doctor->id);
 
         /* unlink(public_path().$user->photo->file); */
+
+        $doctor->services()->detach();
 
         $doctor->delete();
 
