@@ -4,6 +4,7 @@
  use App\RendezVous;
  use App\Doctor;
  use App\Resource;
+ use App\Patient;
 
 
 /*
@@ -38,7 +39,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 /* Route::resource('pages', 'PagesController'); */
 
 Route::get('/', function () {
-    return view('home');
+
+    $services = Service::all();
+    return view('home',compact('services'));
 
 });
 
@@ -71,7 +74,7 @@ Route::get('/contact', function () {
 Route::group(['middleware' => ['Admin']], function () {
 
 
-    Route::get('admin/serdoc/{id}', function ($id) {
+    /* Route::get('admin/serdoc/{id}', function ($id) {
 
         $doctor = Doctor::findOrfail($id);
         $resource = Resource::findOrfail(1);
@@ -86,6 +89,17 @@ Route::group(['middleware' => ['Admin']], function () {
         }
 
     });
+
+
+
+    Route::get('admin/ren/{id}', function ($id) {
+
+        $service = Service::findOrfail(2);
+        dd($service->rendezvouses()->whereId(1)->get());
+
+    });
+ */
+
 
 
 

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServicesRequest extends FormRequest
+class ServicesUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+   public function authorize()
     {
         return true;
     }
@@ -26,9 +26,6 @@ class ServicesRequest extends FormRequest
         return [
             'name'=>'required',
             'content'=>'required',
-            'photo_id'=>'required',
         ];
     }
 }
-
-

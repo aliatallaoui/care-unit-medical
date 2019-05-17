@@ -2,6 +2,9 @@
 
 namespace App;
 use App\Photo;
+use App\RendezVous;
+use App\Resource;
+use App\Doctor;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +28,12 @@ class Service extends Model
     {
         return $this->belongsToMany('App\Doctor','doctor_service');
     }
+
+    public function rendez_vouses()
+    {
+        return $this->belongsToMany('App\RendezVous', 'service_rendez_vouse', 'service_id', 'rendez_vouse_id')->withTimestamps();
+    }
+
 
 
 }

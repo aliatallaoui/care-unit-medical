@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Service;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $services = Service::all();
+        return view('home',compact('services'));
     }
 }

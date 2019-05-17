@@ -105,15 +105,16 @@ class ResourceController extends Controller
         $resourceupdate = $request->all();
 
         if ($request->stock > 0) {
-            $resource->etat = 0;
+            $request['etat'] = 0;
             /* $resourceupdate['etat'] = 0; */
         } else {
-            $resource->etat = 0;
+            $request['etat'] = 1;
             /* $resourceupdate['etat'] = 1; */
         }
 
+
         /* Resource::findOrfail($resource->id); */
-        $resource->update($resourceupdate);
+        $resource->update($request->all());
 
         $resource->services()->sync($request->get('service_id'));
 

@@ -147,14 +147,14 @@
                             @isset($rendes)
                                 @foreach ($rendes as $rendez)
                                     <li>
-                                        <a href="{{ route('patients.show',$rendez->patient) }}">
+                                        <a href="{{ route('patients.show',$rendez->id) }}">
                                             <span class="photo"><img alt="avatar" src="{{ asset('images/doctor4.jpg') }}"></span>
                                             <span class="subject">
-                                                <span class="from">{{ $rendez->patient->name }}</span>
+                                                <span class="from">{{ $rendez->date_rdv }}</span>
                                                 <span class="time">{{ $rendez->created_at->diffForHumans() }}</span>
                                             </span>
                                             <span class="message">
-                                                {{ $rendez->patient->message }}
+                                                {{ $rendez->date_rdv }}
                                             </span>
                                         </a>
                                     </li>
@@ -217,8 +217,26 @@
             </div>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Logout</a></li>
+                    <li>
+                        <a class="logout" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                        </a>
+                    </li>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </ul>
+
+
+
+
+
+
+
+
             </div>
         </header>
         <!--header end-->

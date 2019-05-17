@@ -58,7 +58,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($patient)
     {
 
         $rendes = RendezVous::all();

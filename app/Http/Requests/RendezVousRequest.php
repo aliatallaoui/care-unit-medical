@@ -24,7 +24,7 @@ class RendezVousRequest extends FormRequest
     public function rules()
     {
         return [
-            'service_id'=>'required',
+
             'date_rdv'=>'required',
 
         ];

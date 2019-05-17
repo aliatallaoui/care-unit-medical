@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\RendezVous;
+use App\Doctor;
+use App\Patient;
+
 
 use Illuminate\Http\Request;
 
@@ -13,7 +17,13 @@ class AdminRendezVousController extends Controller
      */
     public function index()
     {
-        return 'it work ';
+
+        $rendes = RendezVous::all();
+        dd($rendes);
+
+
+
+        return view('admin.rendezvousse.index',compact('rendes'));
     }
 
     /**

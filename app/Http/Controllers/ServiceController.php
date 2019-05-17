@@ -11,7 +11,7 @@ use App\Photo;
 use Illuminate\Http\Request;
 use App\Http\Requests\ServicesRequest;
 use Illuminate\Support\Facades\Session;
-
+use App\Http\Requests\ServicesUpdateRequest;
 
 class ServiceController extends Controller
 {
@@ -115,7 +115,7 @@ class ServiceController extends Controller
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(ServicesRequest $request, Service $service)
+    public function update(ServicesUpdateRequest $request, Service $service)
     {
         //
          $input = $request->all();

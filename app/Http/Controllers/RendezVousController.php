@@ -42,7 +42,20 @@ class RendezVousController extends Controller
      */
     public function store(RendezVousRequest $request)
     {
-        $patient = new Patient;
+
+
+        $patient = Patient::create($request->all());
+
+        $rendezVous = RendezVous::create(['date_rdv'=>$request->date_rdv]);
+
+
+
+
+        $rendezVous->patients()->attach($patient->id);
+        $rendezVous->services()->attach($request->get('service_id'));
+
+
+        /* $patient = new Patient;
 
         $patient->name = $request->name;
         $patient->email = $request->email;
@@ -54,12 +67,11 @@ class RendezVousController extends Controller
 
 
         $rendezvous = new RendezVous;
-
-        $rendezvous->service_id = $request->service_id;
-        $rendezvous->patient_id = $patient->id;
         $rendezvous->date_rdv = $request->date_rdv;
 
-        $rendezvous->save();
+        $rendezvous->save(); */
+
+
 
 
 

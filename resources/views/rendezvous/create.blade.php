@@ -54,7 +54,7 @@
                 form-horizontal style-form']) !!}
             <div class="form-group {{ $errors->get('name') ? 'has-error' : 'has-success' }}">
                 {{--  <input type="text" placeholder="Your Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Name'" required>  --}}
-                {!! Form::text('name', null, ['class'=>'form-control','placeholder'=>'Your Name','required']) !!}
+                {!! Form::text('name', null, ['class'=>'form-control single-input','placeholder'=>'Your Name','required']) !!}
                         @if ($errors)
                         @foreach ($errors->get('name') as $message)
                         @error('name')

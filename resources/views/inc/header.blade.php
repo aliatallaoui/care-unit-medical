@@ -50,8 +50,20 @@
                         <li>
                             @if (Auth::check())
                             <a href="admin/users">{{ Auth::user()->name }}</a>
+                            <ul>
+                                <li><a href="admin/users">Dashboard Admin</a></li>
+
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a></li>
+                            </ul>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                             @else
-                            <a href="/login">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         @endif
                         </li>
                     </ul>

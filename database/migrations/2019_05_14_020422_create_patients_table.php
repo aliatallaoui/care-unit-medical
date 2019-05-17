@@ -19,7 +19,7 @@ class CreatePatientsTable extends Migration
             $table->string('email')->unique();
             // etat 0 : etat client mstali  1: faire rdv et attent  2:extution rdv
             $table->integer('etat')->unsigned()->nullable()->default(0);
-            $table->string('message', 100)->nullable()->default('text');
+            $table->string('message', 500)->nullable()->default('text');
             $table->dateTime('date_naissance')->nullable();
             $table->timestamps();
         });

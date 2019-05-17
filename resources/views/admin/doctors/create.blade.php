@@ -78,6 +78,7 @@
                         @endif
                     </div>
                 </div>
+                @if (count($services)>0)
                 <div class="form-group {{ $errors->get('service_id') ? 'has-error' : 'has-success' }}">
                     {!! Form::label('service_id', 'Services:', ['class'=>'control-label col-lg-2']) !!}
                     <div class="col-lg-10">
@@ -98,6 +99,7 @@
                         @endif
                     </div>
                 </div>
+                @endif
 
                 <div class="form-group  {{ $errors->get('photo_id') ? 'has-error' : 'has-success' }} ">
                     <label class="control-label col-md-3">Image Upload</label>
