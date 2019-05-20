@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\RendezVous;
+
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -14,7 +16,11 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        //
+        $rendes = RendezVous::all();
+
+        $photos = Photo::all();
+        return view('admin.media.index', compact('photos', 'rendes'));
+
     }
 
     /**
@@ -24,7 +30,9 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        //
+        $rendes = RendezVous::all();
+        return view('admin.media.create', compact('rendes'));
+
     }
 
     /**
@@ -35,7 +43,14 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('file');
+
+        $name = time() . $file->getClientOriginalName();
+
+        $file->move('images', $name);
+
+        Photo::create(['file'=>$name]);
+
     }
 
     /**
@@ -78,8 +93,10 @@ class PhotoController extends Controller
      * @param  \App\Photo  $photo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Photo $photo)
+    public function destroy($id)
     {
-        //
+        Photo::findOrfail($id)->delete();
+
+        return redirect()->back();
     }
 }

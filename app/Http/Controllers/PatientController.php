@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\RendezVous;
 use App\Http\Requests\PatientRequest;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Arr;
+
 
 class PatientController extends Controller
 {

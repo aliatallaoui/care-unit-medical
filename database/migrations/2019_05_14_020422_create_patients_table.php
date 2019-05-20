@@ -21,6 +21,7 @@ class CreatePatientsTable extends Migration
             $table->integer('etat')->unsigned()->nullable()->default(0);
             $table->string('message', 500)->nullable()->default('text');
             $table->dateTime('date_naissance')->nullable();
+            $table->string('Sexe', 100)->nullable()->default('text');
             $table->timestamps();
         });
     }

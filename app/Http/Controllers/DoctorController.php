@@ -7,6 +7,7 @@ use App\Photo;
 use App\RendezVous;
 use App\Specialite;
 use App\Service;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\DoctorsRequest;
@@ -24,9 +25,22 @@ class DoctorController extends Controller
     public function index()
     {
         $rendes = RendezVous::all();
+        $dt = Carbon::today();
+       /*  $posts = App\Post::has('comments')->get(); */
+       $doctors = Doctor::whereHas('horaires', function ($query) {
+           $dt = Carbon::today();
 
-        $doctors = Doctor::all();
-        return view('admin.doctors.index', compact('doctors','rendes'));
+            $query->where('start_date', '=', $dt);
+        })->get();
+
+
+       /*  $doctors = Doctor::has('horaires')->get(); */
+
+        print_r(Doctor::with('horaires')->get()->toArray());
+
+
+
+        /* return view('admin.doctors.index', compact('doctors','rendes','dt')); */
     }
 
     /**

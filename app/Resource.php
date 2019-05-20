@@ -15,7 +15,7 @@ class Resource extends Model
 
     public function services()
     {
-        return $this->belongsToMany('App\Service','resource_service','resource_id','service_id');
+        return $this->belongsToMany('App\Service','resource_service','resource_id','service_id')->withTimestamps();;
     }
 
 }

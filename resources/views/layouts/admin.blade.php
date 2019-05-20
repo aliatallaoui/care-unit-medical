@@ -264,8 +264,8 @@
                             <span>RendezVous</span>
                         </a>
                         <ul class="sub">
+                            <li><a href="{{ route('calendar.index') }}"><i class="fa fa-cog"></i>Grere les calenar</a></li>
                             <li><a href="{{ route('RendezService.index') }}"><i class="fa fa-cog"></i>Grere les Taches</a></li>
-
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -323,6 +323,16 @@
                         <ul class="sub">
                             <li><a href="{{ route('users.create') }}">Create User</a></li>
                             <li><a href="{{ route('users.index') }}">All User</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="" href="javascript:;">
+                            <i class="fa fa-edit"></i>
+                            <span>Media</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{ route('media.create') }}">Upload Media</a></li>
+                            <li><a href="{{ route('media.index') }}">All Medias</a></li>
                         </ul>
                     </li>
 

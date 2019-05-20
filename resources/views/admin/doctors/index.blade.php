@@ -34,6 +34,7 @@
                     <th><i class=" fa fa-graduation-cap"></i>Speacialite</th>
                     <th><i class=" fa fa-edit"></i> Status</th>
                     <th><i class="fa fa-user"></i> profile</th>
+
                     <th><i class=" fa fa-clock-o"></i>  Created_at</th>
                     <th><i class=" fa fa-clock-o"></i>  Updated_at</th>
 
@@ -46,14 +47,16 @@
                             <td><img height="50" src="{{$doctor->photo ? $doctor->photo->file : 'http://placehold.it/50x50'}}" alt="" ></td>
                             <td><a href="{{ route('doctors.edit',$doctor) }}">{{ $doctor->name }}</a></td>
                             <td><b>{{ $doctor->phone_number }}</b></td>
-                            <td>{{ $doctor->specialite->name }}</td>
+                            <td>{{ $doctor->specialite ? $doctor->specialite->name : 'Speacilite' }}</td>
                             <td><strong><span class="btn btn-{{ $doctor->etat == 1 ? 'success' : 'danger' }} btn-xs">{{ $doctor->etat == 1 ? 'Acive' : 'not Active' }}</span></strong></td>
                             <td>
-                                {{-- <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a> --}}
-
                                 <a href="{{ route('doctors.edit',$doctor) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Edit</a>
-                                {{-- <a href="{{ route('doctors.destroy',$doctor->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a> --}}
+                                @foreach ($doctor->horaires as $horaire)
+                                    <li>{{ $horaire->start_date }} <b>{{ $dt }}</b> </li>
+                                @endforeach
+                                <ul></ul>
                             </td>
+
                             <td>{{ $doctor->created_at->diffForHumans() }}</td>
                             <td>{{ $doctor->updated_at->diffForHumans() }}</td>
                         </tr>

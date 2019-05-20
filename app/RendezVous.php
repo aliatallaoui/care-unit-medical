@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\Service;
 use App\Patient;
 use App\RendezVous;
@@ -11,21 +12,25 @@ class RendezVous extends Model
 {
     protected $fillable =
     [
-    'date_rdv',
+    '   date_rdv','patient_id','service_id','Heure','Duree'
     ];
 
 
-    public function services()
+    public function service()
     {
-        return $this->belongsToMany('App\Service', 'service_rendez_vouse', 'rendez_vouse_id', 'service_id')->withTimestamps();
+        return $this->belongsTo('App\Service');
     }
 
-    public function patients()
+    public function patient()
     {
-        return $this->belongsToMany('App\Patient', 'patient_rendez_vouse', 'rendez_vouse_id', 'patient_id')->withTimestamps();
+        return $this->belongsTo('App\Patient');
     }
 
 
+   /*  public function horaires()
+    {
+        return $this->hasMany('App\Horaires');
+    } */
 
 
 }

@@ -3,9 +3,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-5">
-                    @if (Session::has('create_rdv'))
+                    @if (Session::has('create_rdv_ok'))
                     <div class="alert alert-success col-sm-12">
                         {{ session('create_rdv') }}
+                    </div>
+                    @endif
+                    @if (Session::has('create_rdv_fail'))
+                    <div class="alert alert-danger col-sm-12">
+                        {{ session('create_rdv_fail') }}
                     </div>
                     @endif
                     <h4>Caring for better life</h4>

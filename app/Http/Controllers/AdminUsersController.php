@@ -96,10 +96,10 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        $rendes = RendezVous::all();
+       /*  $rendes = RendezVous::all(); */
         $roles = Role::pluck('name', 'id')->all();
         $user = User::findOrfail($id);
-        return view('admin.users.edit',compact('user','roles','rendes'));
+        return view('admin.users.edit',compact('user','roles'));
     }
 
     /**
@@ -113,15 +113,9 @@ class AdminUsersController extends Controller
     {
         $user = User::findOrfail($id);
 
-        if (trim($request->password) == '') {
-            $input = $request->except('password');
-        } else {
-            $input = $request->all();
-            $input['password'] = bcrypt($request->password);
-        }
-
-
         $input = $request->all();
+
+        $input['password'] = Hash::make($request->password);
 
         if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();

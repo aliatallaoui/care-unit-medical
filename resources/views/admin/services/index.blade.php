@@ -31,6 +31,7 @@
                         <th><i class=" fa fa-photo"></i> Photo</th>
                         <th><i class=" fa fa-user-o"></i> Name</th>
                         <th><i class=" fa fa-edit"></i>Description</th>
+                        <th><i class=" fa fa-edit"></i>Etat Service</th>
                         <th><i class=" fa fa-pencil"></i> Edit</th>
                         <th><i class=" fa fa-clock-o"></i> Created_at</th>
                         <th><i class=" fa fa-clock-o"></i> Updated_at</th>
@@ -47,6 +48,7 @@
                         </td>
                         <td><a href="{{ route('services.edit',$service) }}">{{ $service->name }}</a></td>
                         <td>{{ str_limit($service->content,20) }}</td>
+                        <td><a href="" class="btn btn-{{ $service->ServiceDisponible() ? 'success' : 'danger' }} btn-xs">{{ $service->ServiceDisponible() ? 'Service Disponible' : 'Service non Disponible' }}</a></td>
                         <td>
                             <a href="{{ route('services.edit',$service) }}" class="btn btn-primary btn-xs"><i
                                     class="fa fa-pencil"></i> Edit

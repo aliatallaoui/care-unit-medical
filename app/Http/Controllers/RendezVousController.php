@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Patient;
 use App\Service;
 use App\RendezVous;
+use App\Doctor;
+use App\Resource;
+use App\Horaire;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\RendezVousRequest;
 
 use Illuminate\Support\Facades\Session;
-
 
 class RendezVousController extends Controller
 {
@@ -21,7 +24,7 @@ class RendezVousController extends Controller
     public function index()
     {
         $services = Service::all();
-        return view('rendezvous.index',compact('services'));
+        return view('rendezvous.index', compact('services'));
     }
 
     /**
@@ -42,17 +45,96 @@ class RendezVousController extends Controller
      */
     public function store(RendezVousRequest $request)
     {
+        // Block validation RendezVous
+        $service = Service::findOrfail($request->get('service_id'));
+
+        /* return $service->doctors.'<br>'.$service->resources; */
+        //$etat_doctor = true;
+        /* foreach ($service->doctors as $doctor) {
+            if ($doctor->etat == 0) {
+                Doctor::findOrfail($doctor->id)->update(['etat'=>1]);
+
+                $service->doctors()->attach($doctor->id);
+                $doctor_of_patient = $doctor->id;
+
+                break;
+            } else {
+                $doctor_of_patient = 0;
+                $etat_doctor = false;
+            }
+        }
+        $etat_resource = true; */
+
+        /* foreach ($service->resources as $resource) {
+            if ($resource->etat == 0) {
+                $res = Resource::findOrfail($resource->id);
+
+                if ($res->stock > 0) {
+                    $res->stock = $res->stock - 1;
+                    $service->resources()->attach($res->id);
+                    if ($res->stock == 0) {
+                        $res->etat = 1;
+                        $res->save();
+                    }
+                } else {
+                    $etat_resource = false;
+                    break;
+                }
+            } else {
+                $etat_resource = false;
+                break;
+            }
+        } */
 
 
-        $patient = Patient::create($request->all());
+        if ($service->ServiceDisponible()) {
 
-        $rendezVous = RendezVous::create(['date_rdv'=>$request->date_rdv]);
-
-
+            $service->Reserve();
 
 
-        $rendezVous->patients()->attach($patient->id);
-        $rendezVous->services()->attach($request->get('service_id'));
+            $patient = Patient::create($request->all());
+
+            $rendezVous = RendezVous::create(['date_rdv'=>$request->date_rdv]);
+
+
+            $horairecreate = [
+
+                'title'=>$service->name,
+                'start_date'=>$rendezVous->date_rdv,
+                'end_date'=>$rendezVous->date_rdv,
+                'patient_id'=>$patient->id,
+                'service_id'=>$service->id,
+                'doctor_id'=>$service->Doctor_id()
+
+            ];
+
+            $horaire = Horaire::create($horairecreate);
+
+
+
+
+
+            Session::flash('create_rdv_ok', 'RendezVous Succsufel');
+
+            /* $rendezVous->patients()->attach($patient->id);
+            $rendezVous->services()->attach($service->id); */
+
+            return redirect('/');
+
+        }else{
+
+            $messge = 'RendezVous Fail !';
+            Session::flash('create_rdv_fail', $messge );
+            return redirect('/');
+
+        }
+
+
+        // End validation RendezVous
+
+
+        /* $rendezVous->patients()->attach($patient->id); */
+        /* $rendezVous->services()->attach($request->get('service_id')); */
 
 
         /* $patient = new Patient;
@@ -75,12 +157,11 @@ class RendezVousController extends Controller
 
 
 
-        Session::flash('create_rdv', 'Rendez Vous Sucessful');
+        /*  */
 
         /* User::create($request->all()); */
-        return redirect('/');
+       /*  return redirect('/'); */
         // return $request->all();
-
     }
 
     /**

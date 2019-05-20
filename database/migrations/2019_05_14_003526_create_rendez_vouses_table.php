@@ -15,7 +15,11 @@ class CreateRendezVousesTable extends Migration
     {
         Schema::create('rendez_vouses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('patient_id')->nullable()->index();
+            $table->bigInteger('service_id')->nullable()->index();
             $table->dateTime('date_rdv')->nullable();
+            $table->string('Heure', 100)->nullable();
+            $table->string('Duree', 100)->nullable();
             $table->timestamps();
         });
     }

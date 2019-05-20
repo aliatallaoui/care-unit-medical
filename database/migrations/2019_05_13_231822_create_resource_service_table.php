@@ -13,11 +13,22 @@ class CreateResourceServiceTable extends Migration
      */
     public function up()
     {
+         Schema::enableForeignKeyConstraints();
+
         Schema::create('resource_service', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('resource_id')->unsigned()->nullable()->index();
             $table->integer('service_id')->unsigned()->nullable()->index();
             $table->timestamps();
+            /* $table->foreign('resource_id')
+                ->references('id')
+                ->on('resources')
+                ->onDelete('cascade');
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('services')
+                ->onDelete('cascade');
+ */
         });
     }
 
@@ -28,6 +39,8 @@ class CreateResourceServiceTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('resource_service');
     }
 }

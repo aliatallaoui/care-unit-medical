@@ -13,11 +13,25 @@ class CreateDoctorServiceTable extends Migration
      */
     public function up()
     {
+         Schema::enableForeignKeyConstraints();
+
         Schema::create('doctor_service', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('doctor_id')->unsigned()->nullable()->index();
             $table->integer('service_id')->unsigned()->nullable()->index();
+
             $table->timestamps();
+
+            /* $table->foreign('doctor_id')
+                ->references('id')
+                ->on('doctors')
+                ->onDelete('cascade');
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('services')
+                ->onDelete('cascade');
+ */
+
         });
     }
 
@@ -28,6 +42,8 @@ class CreateDoctorServiceTable extends Migration
      */
     public function down()
     {
+         Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('doctor_service');
     }
 }

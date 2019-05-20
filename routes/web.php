@@ -71,7 +71,7 @@ Route::get('/contact', function () {
 
 
 
-Route::group(['middleware' => ['Admin']], function () {
+Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 
 
     /* Route::get('admin/serdoc/{id}', function ($id) {
@@ -119,6 +119,10 @@ Route::group(['middleware' => ['Admin']], function () {
 
     Route::resource('admin/patients', 'PatientController');
 
+    Route::resource('admin/media', 'PhotoController');
+
+    Route::resource('admin/calendar', 'AdminHorairesController');
+
 
 
 });
@@ -137,6 +141,20 @@ Route::get('/services/create/{id}', function ($id) {
 
 
 
+// Date
+
+Route::get('/date', function () {
+
+    $date = new DateTime('2000-01-01');
+    $date->add(new DateInterval('PT10H30S'));
+    echo "<h1>".$date->format('Y-m-d H:i:s') ."</h1><br>";
+
+    $date = new DateTime('2000-01-01');
+    $date->add(new DateInterval('P7Y24M4DT4H3M2S'));
+    echo "<h1>".$date->format('Y-m-d H:i:s')."</h1><br>";
+
+
+});
 
 
 
