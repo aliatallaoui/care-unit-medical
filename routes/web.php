@@ -5,6 +5,8 @@
  use App\Doctor;
  use App\Resource;
  use App\Patient;
+ use Illuminate\Support\Arr;
+
 
 
 /*
@@ -24,6 +26,8 @@
 
 Auth::routes();
 
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -41,7 +45,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function () {
 
     $services = Service::all();
-    return view('home',compact('services'));
+    $servicesRDV = Service::pluck('name', 'id')->all();
+
+    return view('home',compact('services','servicesRDV'));
 
 });
 
@@ -125,10 +131,15 @@ Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 
 
 
+
+
 });
 
 
 Route::resource('/rendezvous', 'RendezVousController');
+
+Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherche','uses'=>'RendezVousController@recherche']);
+
 
 
 Route::get('/services/create/{id}', function ($id) {
@@ -152,6 +163,53 @@ Route::get('/date', function () {
     $date = new DateTime('2000-01-01');
     $date->add(new DateInterval('P7Y24M4DT4H3M2S'));
     echo "<h1>".$date->format('Y-m-d H:i:s')."</h1><br>";
+
+
+});
+
+Route::get('/testarray', function () {
+
+    $doctors = array();
+
+    $doctors[0] = Doctor::where('id', 1)->get();
+    $doctors[1] = Doctor::where('id', 1)->get();
+    $doctors[2] = Doctor::where('id', 1)->get();
+
+    foreach ($doctors as $doctor) {
+        echo "".$doctor;
+    }
+
+
+
+
+    /* return Doctor::where('id', 1)->orwhere('id',[2,3])->get(); */
+
+
+
+   /*  if (count($arrayName) >= 4) {
+        echo "akbar mn 4 <br>";
+    }
+
+    foreach ($arrayName as $ar) {
+        if ($ar == 2) {
+            echo " hna nrmlment kayn wahd ";
+        }
+        echo "".$ar.'<br>';
+    } */
+
+
+
+
+    //foreach ($arrayName as $ar) {
+
+        /* $arrayName = Arr::add($arrayName, $index, );
+        $index++; */
+
+
+
+    //}
+
+
 
 
 });

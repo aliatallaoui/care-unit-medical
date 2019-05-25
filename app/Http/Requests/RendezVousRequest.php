@@ -26,6 +26,16 @@ class RendezVousRequest extends FormRequest
         return [
 
             'date_rdv'=>'required',
+            'Duree'=>'required',
+            'Heure'=>'required',
+            'service_id'=>'required',
+            'doctor_id'=>'required',
+            'patient_id'=>'required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'etat'=>'required',
+            'sexe'=>'required'
+            ,'message'=>'required',
 
         ];
     }

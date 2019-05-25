@@ -25,6 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         $services = Service::all();
-        return view('home',compact('services'));
+        $servicesRDV = Service::pluck('name', 'id')->all();
+
+        return view('home',compact('services','servicesRDV'));
     }
 }

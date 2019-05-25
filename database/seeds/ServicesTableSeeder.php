@@ -14,7 +14,7 @@ class ServicesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-    	foreach (range(1,5) as $index) {
+    	foreach (range(1,10) as $index) {
 	        DB::table('services')->insert([
 	            'name' => $faker->name,
 	            'content' => $faker->paragraph,

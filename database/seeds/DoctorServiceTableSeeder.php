@@ -15,7 +15,7 @@ class DoctorServiceTableSeeder extends Seeder
     {
 
         $faker = Faker::create();
-        for ($i=1; $i < 5; $i++) {
+        for ($i=1; $i < 20; $i++) {
             Doctor::findOrfail($i)->services()->sync([$faker->numberBetween($min = 1, $max = 10),$faker->numberBetween($min = 1, $max = 10),$faker->numberBetween($min = 1, $max = 10),$faker->numberBetween($min = 1, $max = 10)]);
         }
     }

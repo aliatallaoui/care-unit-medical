@@ -25,22 +25,22 @@ class DoctorController extends Controller
     public function index()
     {
         $rendes = RendezVous::all();
-        $dt = Carbon::today();
-       /*  $posts = App\Post::has('comments')->get(); */
-       $doctors = Doctor::whereHas('horaires', function ($query) {
+        /* $dt = Carbon::today(); */
+        /* $posts = App\Post::has('comments')->get(); */
+       /* $doctors = Doctor::whereHas('horaires', function ($query) {
            $dt = Carbon::today();
 
             $query->where('start_date', '=', $dt);
-        })->get();
+        })->get(); */
 
 
-       /*  $doctors = Doctor::has('horaires')->get(); */
+        $doctors = Doctor::all();
 
-        print_r(Doctor::with('horaires')->get()->toArray());
+       /*  print_r(Doctor::with('horaires')->get()->toArray()); */
 
 
 
-        /* return view('admin.doctors.index', compact('doctors','rendes','dt')); */
+        return view('admin.doctors.index', compact('doctors','rendes'));
     }
 
     /**

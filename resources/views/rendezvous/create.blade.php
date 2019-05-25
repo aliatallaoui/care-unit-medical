@@ -75,6 +75,8 @@
             </div>
 
 
+
+
             <div class="form-group {{ $errors->get('date_naissance') ? 'has-error' : 'has-success' }}">
 
                     <div class="form-group">
@@ -102,6 +104,8 @@
                         @endif
                     </div>
                 </div>
+
+
 
 
 

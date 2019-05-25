@@ -19,8 +19,9 @@
     <link href="{{ asset('css/owl-carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/linearicons.css') }}" rel="stylesheet">
+     <link href="{{ asset('css/nice-select.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+    {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">  --}}
 
     {{--  <link rel="stylesheet" href="assets/css/animate-3.7.0.css">
     <link rel="stylesheet" href="assets/css/font-awesome-4.7.0.min.css">
@@ -29,4 +30,3 @@
     <link rel="stylesheet" href="assets/css/jquery.datetimepicker.min.css">
     <link rel="stylesheet" href="assets/css/linearicons.css">
     <link rel="stylesheet" href="assets/css/style.css">  --}}
-

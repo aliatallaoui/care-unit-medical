@@ -1,18 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Patient;
 use App\Service;
 use App\RendezVous;
 use App\Doctor;
-use App\Resource;
-use App\Horaire;
-
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+
 use App\Http\Requests\RendezVousRequest;
 
+
 use Illuminate\Support\Facades\Session;
+
+
+use Carbon\Carbon;
+
+
+
+
 
 class RendezVousController extends Controller
 {
@@ -23,8 +28,16 @@ class RendezVousController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
-        return view('rendezvous.index', compact('services'));
+        $RendezVousPatient = new RendezVous;
+
+        $servicesRDV = Service::pluck('name', 'id')->all();
+        $doctorsRDV = doctor::pluck('name', 'id')->all();
+
+
+
+
+        return view('rendezvous.index', compact( 'servicesRDV','RendezVousPatient','doctorsRDV'));
+
     }
 
     /**
@@ -32,9 +45,9 @@ class RendezVousController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($rendezvous)
     {
-        //
+
     }
 
     /**
@@ -45,132 +58,19 @@ class RendezVousController extends Controller
      */
     public function store(RendezVousRequest $request)
     {
-        // Block validation RendezVous
-        $service = Service::findOrfail($request->get('service_id'));
 
-        /* return $service->doctors.'<br>'.$service->resources; */
-        //$etat_doctor = true;
-        /* foreach ($service->doctors as $doctor) {
-            if ($doctor->etat == 0) {
-                Doctor::findOrfail($doctor->id)->update(['etat'=>1]);
-
-                $service->doctors()->attach($doctor->id);
-                $doctor_of_patient = $doctor->id;
-
-                break;
-            } else {
-                $doctor_of_patient = 0;
-                $etat_doctor = false;
-            }
-        }
-        $etat_resource = true; */
-
-        /* foreach ($service->resources as $resource) {
-            if ($resource->etat == 0) {
-                $res = Resource::findOrfail($resource->id);
-
-                if ($res->stock > 0) {
-                    $res->stock = $res->stock - 1;
-                    $service->resources()->attach($res->id);
-                    if ($res->stock == 0) {
-                        $res->etat = 1;
-                        $res->save();
-                    }
-                } else {
-                    $etat_resource = false;
-                    break;
-                }
-            } else {
-                $etat_resource = false;
-                break;
-            }
-        } */
+        return 'it work';
 
 
-        if ($service->ServiceDisponible()) {
-
-            $service->Reserve();
-
-
-            $patient = Patient::create($request->all());
-
-            $rendezVous = RendezVous::create(['date_rdv'=>$request->date_rdv]);
-
-
-            $horairecreate = [
-
-                'title'=>$service->name,
-                'start_date'=>$rendezVous->date_rdv,
-                'end_date'=>$rendezVous->date_rdv,
-                'patient_id'=>$patient->id,
-                'service_id'=>$service->id,
-                'doctor_id'=>$service->Doctor_id()
-
-            ];
-
-            $horaire = Horaire::create($horairecreate);
-
-
-
-
-
-            Session::flash('create_rdv_ok', 'RendezVous Succsufel');
-
-            /* $rendezVous->patients()->attach($patient->id);
-            $rendezVous->services()->attach($service->id); */
-
-            return redirect('/');
-
-        }else{
-
-            $messge = 'RendezVous Fail !';
-            Session::flash('create_rdv_fail', $messge );
-            return redirect('/');
-
-        }
-
-
-        // End validation RendezVous
-
-
-        /* $rendezVous->patients()->attach($patient->id); */
-        /* $rendezVous->services()->attach($request->get('service_id')); */
-
-
-        /* $patient = new Patient;
-
-        $patient->name = $request->name;
-        $patient->email = $request->email;
-        $patient->etat = $request->etat;
-        $patient->message = $request->message;
-        $patient->date_naissance = $request->date_naissance;
-
-        $patient->save();
-
-
-        $rendezvous = new RendezVous;
-        $rendezvous->date_rdv = $request->date_rdv;
-
-        $rendezvous->save(); */
-
-
-
-
-
-        /*  */
-
-        /* User::create($request->all()); */
-       /*  return redirect('/'); */
-        // return $request->all();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\RendezVous  $rendezVous
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(RendezVous $rendezVous)
+    public function show($id)
     {
         //
     }
@@ -178,10 +78,10 @@ class RendezVousController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RendezVous  $rendezVous
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(RendezVous $rendezVous)
+    public function edit($id)
     {
         //
     }
@@ -190,10 +90,10 @@ class RendezVousController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RendezVous  $rendezVous
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RendezVous $rendezVous)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -201,11 +101,88 @@ class RendezVousController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RendezVous  $rendezVous
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RendezVous $rendezVous)
+    public function destroy($id)
     {
         //
+    }
+    public function recherche(Request $request)
+    {
+        // attribute of Rendez Vous of Patient
+        $RendezVousPatient = new RendezVous;
+        $RendezVousPatient->date_rdv = $request->date_rdv;
+        $RendezVousPatient->service_id = $request->service_id;
+        $RendezVousPatient->Heure = $request->Heure;
+        $RendezVousPatient->Duree = 30;
+        // Atribute of validation of rendez vous
+        $service = Service::findOrfail($request->service_id);
+        $doctors_service = $service->doctors;
+        $date_rdv_patient = Carbon::parse($RendezVousPatient->date_rdv);
+        $rendesvouses = RendezVous::where('service_id',$RendezVousPatient->service_id)->get();
+
+        // doctors_notD_id homa doctors li y9dro ykhdmo service bsah reserved fi date li demendah
+        $doctors_not_Dis = array();
+        $count_not_Dis = 0;
+        // doctors_D_id homa doctors li y9dro ykhdmo service w mhmch reserved fi date li demendah
+        $doctors_Dis = array();
+        $count_Dis = 0;
+
+        foreach ($rendesvouses as $Rendezvous) {
+
+            $dateRDV = Carbon::parse($Rendezvous->date_rdv);
+
+            if($dateRDV == $date_rdv_patient && $Rendezvous->Heure == $RendezVousPatient->Heure){
+
+                // doctors not disponible for this rendezvous
+                $doctors_not_Dis[$count_not_Dis] = Doctor::findOrfail($Rendezvous->doctor_id);
+                $count_not_Dis++;
+
+            }
+        }
+
+        if ($count_not_Dis > 0) {
+
+            foreach ($doctors_service as $doctor) {
+                $disponible = true;
+                foreach ($doctors_not_Dis as $Doctor_not_Dis) {
+                    if ($doctor->id == $Doctor_not_Dis->id) {
+                        $disponible = false;
+                    }
+                }
+                if ($disponible) {
+
+                    $doctors_Dis[$count_Dis] = Doctor::findOrfail($doctor->id);
+                    $count_Dis++;
+
+                }
+
+
+            }
+
+            Session::flash('Rendezvous_succsucful', 'Votre Date Reserved');
+
+            $servicesRDV = Service::pluck('name', 'id')->all();
+            $doctorsRDV = Arr::pluck($doctors_Dis, 'name', 'id');
+
+            return view('rendezvous.index', compact('doctorsRDV', 'RendezVousPatient', 'servicesRDV', 'service'));
+
+
+        }else{
+           $doctorsRDV = doctor::pluck('name', 'id')->all();
+           $doctors_Dis = $service->doctors;
+           $servicesRDV = Service::pluck('name', 'id')->all();
+           Session::flash('Rendezvous_fail', 'Votre Date Reserved');
+           return view('rendezvous.index', compact('doctorsRDV', 'RendezVousPatient', 'servicesRDV', 'service'));
+
+
+        }
+
+
+
+
+
+
     }
 }

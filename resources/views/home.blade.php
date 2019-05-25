@@ -4,8 +4,10 @@
 
 
 
+
     @if (count($services)>0)
         @section('services')
+
             @foreach ($services as $service)
 
                 <div class="single-slide">
@@ -49,3 +51,8 @@
     </div>
 </div>
 @endsection  --}}
+
+
+
+
+{{--      <!-- Banner Area End -->  --}}
