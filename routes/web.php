@@ -9,6 +9,8 @@
 
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -136,18 +138,26 @@ Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 });
 
 
+
+
+
+
+
 Route::resource('/rendezvous', 'RendezVousController');
+Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherchepost','uses'=>'RendezVousController@recherche']);
 
-Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherche','uses'=>'RendezVousController@recherche']);
+/* Route::get('rendezvous/recherche','RendezVousController@store'); */
 
 
 
-Route::get('/services/create/{id}', function ($id) {
+
+
+/* Route::get('/services/create/{id}', function ($id) {
 
     $service = Service::findOrfail($id);
     return view('rendezvous.create', compact('service'));
 
-});
+}); */
 
 
 
@@ -168,47 +178,6 @@ Route::get('/date', function () {
 });
 
 Route::get('/testarray', function () {
-
-    $doctors = array();
-
-    $doctors[0] = Doctor::where('id', 1)->get();
-    $doctors[1] = Doctor::where('id', 1)->get();
-    $doctors[2] = Doctor::where('id', 1)->get();
-
-    foreach ($doctors as $doctor) {
-        echo "".$doctor;
-    }
-
-
-
-
-    /* return Doctor::where('id', 1)->orwhere('id',[2,3])->get(); */
-
-
-
-   /*  if (count($arrayName) >= 4) {
-        echo "akbar mn 4 <br>";
-    }
-
-    foreach ($arrayName as $ar) {
-        if ($ar == 2) {
-            echo " hna nrmlment kayn wahd ";
-        }
-        echo "".$ar.'<br>';
-    } */
-
-
-
-
-    //foreach ($arrayName as $ar) {
-
-        /* $arrayName = Arr::add($arrayName, $index, );
-        $index++; */
-
-
-
-    //}
-
 
 
 

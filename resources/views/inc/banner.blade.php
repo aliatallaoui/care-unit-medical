@@ -3,9 +3,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-5">
-                @if (Session::has('create_rdv_ok'))
+                @if (Session::has('create_rdv_successful'))
                 <div class="alert alert-success col-sm-12">
-                    {{ session('create_rdv') }}
+                    {{ session('create_rdv_successful') }}
                 </div>
                 @endif
                 @if (Session::has('create_rdv_fail'))
@@ -17,12 +17,13 @@
                 <h1>Leading the way in medical excellence</h1>
                 <p>Earth greater grass for good. Place for divide evening yielding them that. Creeping beginning over
                     gathered brought.</p>
-                {{--  <a href="{{ route('rendezvous.index') }}" class="template-btn mt-3">take appointment</a> --}}
+                 {{-- <a href="{{ route('rendezvous.index') }}" class="template-btn mt-3">take appointment</a> --}}
             </div>
         </div>
 
     </div>
     <div class="container col-8 mt-5 p-1 card">
+
         @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
@@ -39,7 +40,7 @@
 
                     {!! Form::label('date_rdv', 'Check In:', ['style'=>'display:block']) !!}
 
-                    {!! Form::text('date_rdv', null, ['id'=>'datepicker' ,'class'=>'form-control']) !!}
+                    {!! Form::text('date_rdv', null, ['id'=>'datepicker' ,'class'=>'form-control','required']) !!}
 
                 </div>
 
@@ -61,49 +62,16 @@
                     '12'=>'14:00 At 14:30',
                     '13'=>'14:30 At 15:00'
 
-                    ], null, ['id'=>'Horaire','class'=>'form-control']) !!}
+                    ], null, ['id'=>'Horaire','class'=>'form-control','required']) !!}
 
                 </div>
 
                 <div class="col-6 col-md-2">
                     {!! Form::label('service_id', 'Services:', ['style'=>'display:block']) !!}
                     {!! Form::select('service_id',[''=>'Choise
-                    Service']+$servicesRDV,null,['class'=>'form-control']) !!}
+                    Service']+$servicesRDV,null,['class'=>'form-control','required']) !!}
                 </div>
 
-                {{--  <div class="col-4 col-md-1">
-                        <label for="room">Room</label>
-                        <select name="room" id="room" class="form-control">
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                        </select>
-                    </div>  --}}
-                {{--  <div class="col-4 col-md-1">
-                        <label for="adults">Adult</label>
-                        <select name="adults" id="adults" class="form-control">
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                        </select>
-                    </div>  --}}
-                {{--  <div class="col-4 col-md-2 col-lg-1">
-                        <label for="children">Children</label>
-                        <select name="children" id="children" class="form-control">
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                        </select>
-                    </div>  --}}
                 <div class="col-6 col-md-3">
 
                     {!! Form::submit('Check Availability', ['class'=>'template-btn mt-3']) !!}
@@ -112,9 +80,6 @@
 
                 </div>
             </div>
-
-
-
 
         </div>
     </div>

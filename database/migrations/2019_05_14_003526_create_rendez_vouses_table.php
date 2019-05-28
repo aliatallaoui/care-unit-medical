@@ -18,7 +18,7 @@ class CreateRendezVousesTable extends Migration
             $table->bigInteger('patient_id')->nullable()->index();
             $table->bigInteger('service_id')->nullable()->index();
             $table->bigInteger('doctor_id')->nullable()->index();
-            $table->dateTime('date_rdv')->nullable();
+            $table->string('date_rdv')->nullable();
             $table->string('Heure', 100)->nullable();
             $table->string('Duree', 100)->nullable();
             $table->timestamps();

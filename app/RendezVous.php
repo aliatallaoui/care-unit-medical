@@ -12,7 +12,7 @@ class RendezVous extends Model
 {
     protected $fillable =
     [
-    '   date_rdv','patient_id','service_id','Heure','Duree'
+    'date_rdv','patient_id','service_id','Heure','Duree','doctor_id'
     ];
 
 
