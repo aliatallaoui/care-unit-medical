@@ -2,32 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\RendezVous;
-use App\Patient;
-use App\Service;
-use App\Doctor;
-use App\Resource;
-use App\Horaire;
-
-
+use App\Idris;
 use Illuminate\Http\Request;
 
-class AdminRendezVousController extends Controller
+class IdrisController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
     public function index()
     {
-        $rendes = RendezVous::all();
-        $patients = Patient::all();
-
-
-        return view('admin.rendezvousse.index', compact('rendes','patients'));
+        //
     }
 
     /**
@@ -54,10 +41,10 @@ class AdminRendezVousController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Idris  $idris
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Idris $idris)
     {
         //
     }
@@ -65,10 +52,10 @@ class AdminRendezVousController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Idris  $idris
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Idris $idris)
     {
         //
     }
@@ -77,10 +64,10 @@ class AdminRendezVousController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Idris  $idris
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Idris $idris)
     {
         //
     }
@@ -88,10 +75,10 @@ class AdminRendezVousController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Idris  $idris
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Idris $idris)
     {
         //
     }

@@ -21,13 +21,13 @@ class RolesTableSeeder extends Seeder
                 'updated_at'=>$faker->dateTime($max = 'now', $timezone = null),
             ]);
         DB::table('roles')->insert([
-                'name' => 'Auther',
+                'name' => 'Agente',
                 'created_at'=>$faker->dateTime($max = 'now', $timezone = null),
                 'updated_at'=>$faker->dateTime($max = 'now', $timezone = null),
             ]);
 
         DB::table('roles')->insert([
-                'name' => 'Subscriber',
+                'name' => 'Doctor',
                 'created_at'=>$faker->dateTime($max = 'now', $timezone = null),
                 'updated_at'=>$faker->dateTime($max = 'now', $timezone = null),
             ]);

@@ -18,8 +18,8 @@
                         </div>
                     </div>
                     <div class="single-department item-padding text-center">
-                        <a href="services/create/{{ $service->id }}"><h3>{{ $service->name }}</h3></a>
-                        <p>{{ $service->content }}</p>
+                        <a href="rendezvous/"><h3>{{ $service->name }}</h3></a>
+                        <p>{{ str_limit($service->content,30) }}</p>
                     </div>
                 </div>
 

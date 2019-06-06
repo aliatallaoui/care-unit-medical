@@ -5,6 +5,7 @@ namespace App;
 use App\Service;
 use App\Patient;
 use App\RendezVous;
+use App\Doctor;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,13 @@ class RendezVous extends Model
     {
         return $this->belongsTo('App\Patient');
     }
+
+    public function doctor()
+    {
+        return $this->belongsTo('App\Doctor');
+    }
+
+
 
 
    /*  public function horaires()

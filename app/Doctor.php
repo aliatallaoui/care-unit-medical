@@ -37,10 +37,9 @@ class Doctor extends Model
         return $this->hasMany('App\Horaire');
     }
 
-
-
-
-
-
+    public function rendezvouses()
+    {
+        return $this->hasMany('App\RendezVous');
+    }
 
 }

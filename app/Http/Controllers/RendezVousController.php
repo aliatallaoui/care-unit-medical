@@ -20,6 +20,7 @@ use Carbon\Carbon;
 
 
 
+
 class RendezVousController extends Controller
 {
     /**
@@ -279,7 +280,8 @@ class RendezVousController extends Controller
 
         }else{
 
-           $doctorsRDV = doctor::pluck('name', 'id')->all();
+           $doctorsRDV = $service->doctors;
+           $doctorsRDV = Arr::pluck($doctorsRDV, 'name', 'id');
            $doctors_Dis = $service->doctors;
            $servicesRDV = Service::pluck('name', 'id')->all();
            if (Session::has('Date_invalid') || Session::has('Heure_invalid')) {
@@ -287,8 +289,6 @@ class RendezVousController extends Controller
             }
 
             $valid = true;
-            Session::put(['Heure'=>$RendezVousPatient->Heure,'service_id'=>$RendezVousPatient->service_id,'date_rdv'=>$RendezVousPatient->date_rdv]);
-
            Session::flash('date_valid', 'Your Day is Valide, Please Fill  your information And reserve ');
            return view('rendezvous.index', compact('doctorsRDV', 'RendezVousPatient', 'servicesRDV', 'service','Heure','doctors_Dis','valid'));
 

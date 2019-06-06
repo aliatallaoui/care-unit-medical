@@ -7,11 +7,7 @@
  use App\Patient;
  use Illuminate\Support\Arr;
 
-
-
-
-
-/*
+ /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -45,12 +41,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 /* Route::resource('pages', 'PagesController'); */
 
 Route::get('/', function () {
-
     $services = Service::all();
     $servicesRDV = Service::pluck('name', 'id')->all();
 
-    return view('home',compact('services','servicesRDV'));
-
+    return view('home', compact('services', 'servicesRDV'));
 });
 
 
@@ -60,21 +54,17 @@ Route::get('/', function () {
 
 Route::get('/doctors', function () {
     return view('doctors');
-
 });
 
 Route::get('/departments', function () {
     return view('departments');
-
 });
 
 Route::get('/about', function () {
     return view('about');
-
 });
 Route::get('/contact', function () {
     return view('contact');
-
 });
 
 
@@ -111,8 +101,8 @@ Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 
 
 
-/*     Route::get('/admin',['as'=>'admin.index','uses'=>'AdminUsersController@index']);
- */
+    /*     Route::get('/admin',['as'=>'admin.index','uses'=>'AdminUsersController@index']);
+     */
     Route::resource('admin/users', 'AdminUsersController');
 
     Route::resource('admin/specialites', 'SpecialiteController');
@@ -129,12 +119,9 @@ Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 
     Route::resource('admin/media', 'PhotoController');
 
+    Route::get('admin/calendar', 'AdminHorairesController@index');
+
     Route::resource('admin/calendar', 'AdminHorairesController');
-
-
-
-
-
 });
 
 
@@ -165,7 +152,6 @@ Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherchepost','uses'=>'R
 // Date
 
 Route::get('/date', function () {
-
     $date = new DateTime('2000-01-01');
     $date->add(new DateInterval('PT10H30S'));
     echo "<h1>".$date->format('Y-m-d H:i:s') ."</h1><br>";
@@ -173,17 +159,7 @@ Route::get('/date', function () {
     $date = new DateTime('2000-01-01');
     $date->add(new DateInterval('P7Y24M4DT4H3M2S'));
     echo "<h1>".$date->format('Y-m-d H:i:s')."</h1><br>";
-
-
 });
 
 Route::get('/testarray', function () {
-
-
-
 });
-
-
-
-
-

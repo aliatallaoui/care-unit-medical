@@ -14,14 +14,16 @@ class ServicesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-    	foreach (range(1,10) as $index) {
+        $photo_id = 5;
+    	foreach (range(1,5) as $index) {
 	        DB::table('services')->insert([
 	            'name' => $faker->name,
 	            'content' => $faker->paragraph,
-                'photo_id' => $faker->numberBetween($min = 6, $max = 11),
+                'photo_id' => $photo_id,
                 'created_at'=>$faker->dateTime($max = 'now', $timezone = null),
                 'updated_at'=>$faker->dateTime($max = 'now', $timezone = null),
-	        ]);
+            ]);
+            $photo_id++;
 	    }
     }
 

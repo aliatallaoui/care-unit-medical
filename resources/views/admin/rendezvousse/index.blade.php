@@ -41,15 +41,13 @@
                     <tbody>
                         @if (count($rendes)>0)
 
-                        @foreach ($rendes as $rendezvous)
-
-                        @foreach ($rendezvous->patients as $patient)
+                        @foreach ($patients as $patient)
                         <tr>
                             <td>{{ $patient->id }}</td>
                             <td>{{ $patient->name }}</td>
                             <td>{{ $patient->email }}</td>
-                            <td>{{ $patient->horaire->doctor ? $patient->horaire->doctor->name : 'No Doctor' }}</td>
-                            <td>{{ $patient->horaire->doctor->phone_number }}</td>
+                            <td>{{ $patient->rendez_vouse->doctor ? $patient->rendez_vouse->doctor->name : 'No Doctor' }}</td>
+                            <td>{{ $patient->rendez_vouse->doctor->phone_number }}</td>
                             <td><strong><span
                                         class="btn btn-{{ $patient->etat == 1 ? 'success' : 'danger' }} btn-xs">{{ $patient->etat == 1 ? 'Acive' : 'not Active' }}</span></strong>
                                 <a href="{{ route('patients.edit',$patient) }}" class="btn btn-success btn-xs"><i
@@ -62,11 +60,11 @@
                                 {{-- <a href="{{ route('patients.destroy',$patient->id) }}" class="btn btn-danger
                                 btn-xs"><i class="fa fa-trash-o "></i></a> --}}
                             </td>
-                            <td>{{ $patient->horaire->start_date }}</td>
-                            <td>{{ $patient->horaire->end_date }}</td>
+                            <td>{{ $patient->rendez_vouse->date_rdv }}</td>
+                            <td>{{ $patient->rendez_vouse->date_rdv }}</td>
 
                         </tr>
-                        @endforeach
+
 
 
                         @endforeach

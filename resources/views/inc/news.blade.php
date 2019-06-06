@@ -19,9 +19,9 @@
                             <div class="news-date">
                                 22 July 2018
                             </div>
-                            <h3><a href="blog-details.html">chip to model coeliac disease</a></h3>
+                            <h3><a href="#">chip to model coeliac disease</a></h3>
                             <p>Elementum libero hac leo integer. Risus hac part duriw feugiat litora cursus hendrerit bibendum per person on elit.Tempus inceptos posuere me.</p>
-                            <a href="blog-details.html" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="#" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                             <div class="news-date">
                                 22 Oct 2018
                             </div>
-                            <h3><a href="blog-details.html">Galectins An Ancient FaSi Future</a></h3>
+                            <h3><a href="#">Galectins An Ancient FaSi Future</a></h3>
                             <p>Elementum libero hac leo integer. Risus hac part duriw feugiat litora cursus hendrerit bibendum per person on elit.Tempus inceptos posuere me.</p>
-                            <a href="blog-details.html" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="#" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
                             <div class="news-date">
                                 22 Sep 2018
                             </div>
-                            <h3><a href="blog-details.html">Getting the Most Out of the CLARI</a></h3>
+                            <h3><a href="#">Getting the Most Out of the CLARI</a></h3>
                             <p>Elementum libero hac leo integer. Risus hac part duriw feugiat litora cursus hendrerit bibendum per person on elit.Tempus inceptos posuere me.</p>
-                            <a href="blog-details.html" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="#" class="news-btn">read more <i class="fa fa-long-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

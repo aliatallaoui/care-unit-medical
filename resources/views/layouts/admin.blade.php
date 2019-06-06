@@ -137,12 +137,17 @@
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-theme"> {{ count($rendes) }} </span>
+                            <span class="badge bg-theme"> @isset($rendes)
+
+                            {{ count($rendes) }} @endisset </span>
                         </a>
                         <ul class="dropdown-menu extended inbox">
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
-                                <p class="green">You have {{ count($rendes) }} new messages</p>
+                                <p class="green">You have
+                                    @isset($rendes)
+                                     {{ count($rendes) }}
+                                    @endisset new messages</p>
                             </li>
                             @isset($rendes)
                                 @foreach ($rendes as $rendez)
@@ -150,11 +155,11 @@
                                         <a href="{{ route('patients.show',$rendez->id) }}">
                                             <span class="photo"><img alt="avatar" src="{{ asset('images/doctor4.jpg') }}"></span>
                                             <span class="subject">
-                                                <span class="from">{{ $rendez->date_rdv }}</span>
+                                                <span class="from">{{ $rendez->patient ? $rendez->patient->name : $rendez->date_rdv }}</span>
                                                 <span class="time">{{ $rendez->created_at->diffForHumans() }}</span>
                                             </span>
                                             <span class="message">
-                                                {{ $rendez->date_rdv }}
+                                                {{ $rendez->patient ? str_limit($rendez->patient->message,25) : $rendez->date_rdv }}
                                             </span>
                                         </a>
                                     </li>
@@ -162,7 +167,7 @@
                             @endisset
 
                             <li>
-                                <a href="index.html#">See all messages</a>
+                                <a href="{{ route('patients.index') }}">See all messages</a>
                             </li>
                         </ul>
                     </li>
