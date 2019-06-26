@@ -151,7 +151,7 @@ Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherchepost','uses'=>'R
 
 // Date
 
-Route::get('/date', function () {
+/* Route::get('/date', function () {
     $date = new DateTime('2000-01-01');
     $date->add(new DateInterval('PT10H30S'));
     echo "<h1>".$date->format('Y-m-d H:i:s') ."</h1><br>";
@@ -159,7 +159,6 @@ Route::get('/date', function () {
     $date = new DateTime('2000-01-01');
     $date->add(new DateInterval('P7Y24M4DT4H3M2S'));
     echo "<h1>".$date->format('Y-m-d H:i:s')."</h1><br>";
-});
+}); */
 
-Route::get('/testarray', function () {
-});
+

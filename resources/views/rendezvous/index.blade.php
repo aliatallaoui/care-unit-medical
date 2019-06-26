@@ -251,7 +251,7 @@
                         <div class="content-area">
 
                                 <div class="doctor-name text-center">
-                                    <h3>{{ str_limit($service->name,8) }}</h3>
+                                    {{-- <h3>{{ str_limit($service->name) }}</h3> --}}
                                     <h3>{{ $doctor->name }}</h3>
                                     <h5>{{ $doctor->specialite->name }}</h5>
                                 </div>
