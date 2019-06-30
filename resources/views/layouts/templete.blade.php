@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
    @include('inc.head')
+   @yield('cssprint')
 </head>
 <body>
     {{--    <!-- Preloader Starts -->  --}}

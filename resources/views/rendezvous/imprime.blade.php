@@ -3,6 +3,28 @@
 @section('cssprint')
 <style>
 
+     @media screen {
+            #printSection {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printSection,
+            #printSection * {
+                visibility: visible;
+            }
+
+            #printSection {
+                position: relative;
+                left: 0;
+                top: -2000;
+            }
+        }
     .box_general_3 {
         -moz-border-radius: 5px;
         -ms-border-radius: 5px
@@ -139,7 +161,7 @@
                 <h3>information Patient:</h3>
             </div>
             <div class="container-fluid card card-body">
-                {!! Form::open(['method'=>'POST','action'=>'RendezVousController@store','class'=>'cmxform
+                {!! Form::model($patient,['method'=>'DELETE','action'=>['RendezVousController@destroy',$patient->id],'class'=>'cmxform
                 form-horizontal style-form','id'=>'patient-form']) !!}
                 <div class="row">
 
@@ -147,7 +169,7 @@
                         <div class="form-group {{ $errors->get('name') ? 'has-error' : 'has-success' }}">
                             <h4>{!! Form::label('name', 'Name:', ['style'=>'display:block']) !!}</h4>
                             {{--  <input type="text" placeholder="Your Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Name'" >  --}}
-                            {!! Form::text('name', null, ['class'=>'form-control col-md-8 single-input','required']) !!}
+                            {!! Form::text('name', null, ['class'=>'form-control col-md-8 single-input','readonly']) !!}
                             @if ($errors)
                             @foreach ($errors->get('name') as $message)
                             @error('name')
@@ -158,7 +180,7 @@
                         </div>
                         <div class="form-group {{ $errors->get('email') ? 'has-error' : 'has-success' }}">
                             <h4>{!! Form::label('email', 'Email:', ['style'=>'display:block']) !!}</h4>
-                            {!! Form::email('email', null, ['class'=>'form-control col-md-8 single-input ','required'])
+                            {!! Form::email('email', null, ['class'=>'form-control col-md-8 single-input ','readonly'])
                             !!}
                             @if ($errors)
                             @foreach ($errors->get('email') as $message)
@@ -177,7 +199,7 @@
                                 <h4>{!! Form::label('date_naissance', 'Date_naissance:', ['style'=>'display:block']) !!}
                                 </h4>
                                 {!! Form::date('date_naissance', null, ['class'=>'form-control single-input
-                                col-lg-12','required']) !!}
+                                col-lg-12','readonly']) !!}
                                 @if ($errors)
                                 @foreach ($errors->get('date_naissance') as $message)
                                 @error('date_naissance')
@@ -192,7 +214,7 @@
                             <div class="form-group">
                                 <h4>{!! Form::label('sexe', 'Sexe:', ['style'=>'display:block']) !!}</h4>
                                 {!! Form::select('sexe', [''=>'choise Sexe','1'=>'male','2'=>'femele'],null,
-                                ['class'=>'form-control single-input col-lg-12','required']) !!}
+                                ['class'=>'form-control single-input col-lg-12','readonly']) !!}
 
                                 @if ($errors)
                                 @foreach ($errors->get('sexe') as $message)
@@ -219,7 +241,7 @@
                 {!! Form::hidden('Heure', $rendezVous->Heure, ['class'=>'']) !!}
                 <div class="form-group ">
                     {!! Form::textarea('message', null,
-                    ['class'=>'form-control','placeholder'=>'Message','rows'=>7,'required' ]) !!}
+                    ['class'=>'form-control','placeholder'=>'Message','rows'=>7 ,'readonly']) !!}
                     @if ($errors)
                     @foreach ($errors->get('message') as $message)
                     @error('message')
@@ -230,20 +252,28 @@
                 </div>
 
 
-            <input type="checkbox" name="check" class="m-1 mt-3" onchange="document.getElementById('btnvalidation').disabled = !this.checked;" />
+            {{--  <input type="checkbox" name="check" class="m-1 mt-3" onchange="document.getElementById('btnvalidation').disabled = !this.checked;" />
 
-             <label for="check" class="m-1 mt-3 text-uppercase"><strong>accept all conditions de utilisation</strong></label>
+             <label for="check" class="m-1 mt-3 text-uppercase"><strong>accept all conditions de utilisation</strong></label>  --}}
 
 
-                <a   onclick="history.back(-1)" class="btn btn-danger  text-white pull-right m-2 ">Return</a>
+                <input type="submit"  class="btn btn-Danger pull-right m-2" value="DELETE">
                 {{--  {!! Form::submit('VALIDE', ['class'=>'btn btn-success pull-right m-2 ']) !!}  --}}
 
                 {{--  <input type="submit" class="btn btn-success pull-right m-2" data-toggle="modal" value="Valide">  --}}
 
-        <button type="submit" name="btnvalidation" class="btn btn-success pull-right m-2" disabled id="btnvalidation" data-toggle ="{{ $modal }}"
-            data-target=".bd-example-modal-lg">Validé</button>
+
+
+
+
+
+
+
 
                 {!! Form::close() !!}
+
+                <button  name="btnvalidation" class="btn btn-success pull-right m-2"  id="btnvalidation" data-toggle ="{{ $modal }}"
+            data-target=".bd-example-modal-lg">IMPRIMME</button>
                 @include('inc.form-error')
             </div>
         </div></div>
@@ -315,7 +345,62 @@
 {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> --}}
 
 
+<!-- Modal -->
 
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">RendezVous </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 ">
+                        <img height="auto" width="200" src="{{ asset('images/logo/logo.png') }}" class="pull-right"
+                            alt="">
+                    </div>
+                </div>
+            </div>
+
+            @isset($rendezVous)
+            <div class="modal-body">
+                <div id="printThis">
+                    <div class="text-center h2 mt-5">
+                        REÇU DEMANDE DE RENDEZ VOUS DE MEDINO <br><br> DATE RENDEZVOUS:{{ $rendezVous->date_rdv }}
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h3>FULL NAME: {{ $rendezVous->patient->name }} </h3><br>
+                            <h3>Date dce naissence: {{ $rendezVous->patient->date_naissance }} </h3><br>
+                            <h3>Sexe: {{ $rendezVous->patient->Sexe == '1' ? 'Male' : 'Female'}} </h3><br>
+                            <h3>Email: {{ $rendezVous->patient->email }} </h3><br>
+                            <h3>Name Doctor: {{ $rendezVous->doctor->name }} </h3><br>
+                            <h3>Service: {{ $rendezVous->service->name }} </h3><br>
+                        </div>
+                    </div>
+                    <div class="row  mt-5">
+                        <div class="col-md-12   mt-5 ">
+                            <svg class="barcode pull-right" jsbarcode-value="{{ $BarCode }}" jsbarcode-textmargin="1"
+                                jsbarcode-fontoptions="bold">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endisset
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnPrint" class="btn btn-primary">IMPRIME</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -340,7 +425,7 @@
     document.getElementById("btnPrint").onclick = function () {
         printElement(document.getElementById("printThis"));
         //printElement(document.getElementById("printThisToo"), true, "<hr />");
-        window.print();
+        //window.print();
     }
 
     function printElement(elem, append, delimiter) {

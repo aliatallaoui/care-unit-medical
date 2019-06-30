@@ -16,7 +16,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100)->nullable()->default('text');
-            $table->string('email')->unique();
+            $table->string('email');
             // etat 0 : etat client mstali  1: faire rdv et attent  2:extution rdv
             $table->integer('etat')->unsigned()->nullable()->default(0);
             $table->string('message', 500)->nullable()->default('text');

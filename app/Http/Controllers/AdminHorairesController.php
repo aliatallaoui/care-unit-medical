@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Calendar;
 use App\RendezVous;
 use Carbon\Carbon;
@@ -11,10 +12,8 @@ use Illuminate\Http\Request;
 
 class AdminHorairesController extends Controller
 {
-     public function index()
+    public function index()
     {
-
-
         $rendes = RendezVous::all();
         $Heure = [      '0'=>'08:00:00',
                         '1'=>'08:30:00',
@@ -39,7 +38,7 @@ class AdminHorairesController extends Controller
 
         $events = [];
         $data = RendezVous::all();
-        if($data->count()) {
+        if ($data->count()) {
             foreach ($data as $key => $value) {
 
                 /* $d = Carbon::create($value->date_rdv); */
@@ -49,7 +48,7 @@ class AdminHorairesController extends Controller
 
 
                 /* $h = Carbon::parse($Heure[$value->Heure]+$value->Duree)); */
-
+              
                 $events[] = Calendar::event(
                     $value->patient->name,
                     false,
@@ -57,16 +56,15 @@ class AdminHorairesController extends Controller
                     $day->addMinutes($value->Duree),
                     null,
                     // Add color and link on event
-	                [
-	                    'color' => 'green',
-	                    'url' => 'patients/index',
+                    [
+                        'color' => 'green',
+                        'url' => 'patients/index',
                     ]
                     );
             }
         }
         $calendar = Calendar::addEvents($events);
 
-        return view('admin.rendezvousse.gerertache', compact('calendar','rendes'));
+        return view('admin.rendezvousse.gerertache', compact('calendar', 'rendes'));
     }
 }
-

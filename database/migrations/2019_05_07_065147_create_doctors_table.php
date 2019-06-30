@@ -21,7 +21,6 @@ class CreateDoctorsTable extends Migration
             $table->bigInteger('specialite_id')->nullable()->index()->default(0);
             $table->bigInteger('photo_id')->nullable()->index()->default(0);
             $table->integer('etat')->unsigned()->nullable()->default(0);
-            //$table->bigInteger('departement_id')->nullable()->default(12);
             $table->timestamps();
         });
     }

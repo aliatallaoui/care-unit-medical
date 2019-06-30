@@ -132,6 +132,15 @@ Route::group(['middleware' => ['Admin','DataUpdate']], function () {
 
 Route::resource('/rendezvous', 'RendezVousController');
 Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherchepost','uses'=>'RendezVousController@recherche']);
+Route::post('rendezvous/valide', ['as'=>'rendezvous.valide','uses'=>'RendezVousController@valideRendezVous']);
+Route::post('rendezvous/chercher', ['as'=>'rendezvous.valide','uses'=>'RendezVousController@chercher']);
+
+
+
+
+
+
+
 
 /* Route::get('rendezvous/recherche','RendezVousController@store'); */
 
@@ -162,3 +171,6 @@ Route::post('rendezvous/recherche', ['as'=>'rendezvous.recherchepost','uses'=>'R
 }); */
 
 
+// test PDF
+
+Route::get('/pdf', ['as' => 'order.pdf', 'uses' => 'RendezVousController@orderPdf']);

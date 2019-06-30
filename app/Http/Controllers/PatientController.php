@@ -8,7 +8,6 @@ use App\RendezVous;
 use App\Http\Requests\PatientRequest;
 use Illuminate\Support\Facades\Session;
 
-
 class PatientController extends Controller
 {
     /**
@@ -21,7 +20,7 @@ class PatientController extends Controller
         $rendes = RendezVous::all();
 
         $patients = Patient::all();
-        return view('admin.patients.index', compact('patients','rendes'));
+        return view('admin.patients.index', compact('patients', 'rendes'));
     }
 
     /**
@@ -33,7 +32,7 @@ class PatientController extends Controller
     {
         $rendes = RendezVous::all();
 
-        return view('admin.patients.create',compact('rendes'));
+        return view('admin.patients.create', compact('rendes'));
     }
 
     /**
@@ -60,11 +59,10 @@ class PatientController extends Controller
      */
     public function show($patient)
     {
-
         $rendes = RendezVous::all();
         $patients = Patient::all();
 
-        return view('admin.patients.index', compact('patients','rendes'));
+        return view('admin.patients.index', compact('patients', 'rendes'));
     }
 
     /**
@@ -77,7 +75,7 @@ class PatientController extends Controller
     {
         $rendes = RendezVous::all();
 
-        return view('admin.patients.edit', compact('patient','rendes'));
+        return view('admin.patients.edit', compact('patient', 'rendes'));
     }
 
     /**
@@ -106,9 +104,9 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
+        RendezVous::where('patient_id', $patient->id)->delete();
         Patient::findOrfail($patient->id)->delete();
         Session::flash('delete_patient', 'delete of patient succsusful');
         return redirect('admin/patients');
-
     }
 }

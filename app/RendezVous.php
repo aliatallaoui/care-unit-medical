@@ -4,7 +4,7 @@ namespace App;
 
 use App\Service;
 use App\Patient;
-use App\RendezVous;
+
 use App\Doctor;
 
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +21,7 @@ class RendezVous extends Model
     {
         return $this->belongsTo('App\Service');
     }
+   
 
     public function patient()
     {
@@ -35,10 +36,8 @@ class RendezVous extends Model
 
 
 
-   /*  public function horaires()
-    {
-        return $this->hasMany('App\Horaires');
-    } */
-
-
+    /*  public function horaires()
+     {
+         return $this->hasMany('App\Horaires');
+     } */
 }

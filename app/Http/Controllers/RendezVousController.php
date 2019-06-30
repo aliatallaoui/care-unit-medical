@@ -9,10 +9,13 @@ use App\Patient;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\RendezVousRequest;
+use App\Http\Requests\PatientRequest;
 
 
 use Illuminate\Support\Facades\Session;
+use App\Extensions\MongoSessionHandler;
+use Illuminate\Support\ServiceProvider;
+
 
 
 use Carbon\Carbon;
@@ -27,7 +30,6 @@ class RendezVousController extends Controller
     public function index()
     {
         $RendezVousPatient = new RendezVous;
-
         $servicesRDV = Service::pluck('name', 'id')->all();
         $doctorsRDV = doctor::pluck('name', 'id')->all();
         $Heure = [      '0'=>'08:00 At 08:30',
@@ -46,10 +48,6 @@ class RendezVousController extends Controller
                         '13'=>'14:30 At 15:00'
 
         ];
-
-
-
-
         return view('rendezvous.index', compact('servicesRDV', 'RendezVousPatient', 'doctorsRDV', 'Heure'));
     }
 
@@ -58,12 +56,11 @@ class RendezVousController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $RendezVousPatient = new RendezVous;
+        /* $RendezVousPatient = new RendezVous;
         $servicesRDV = Service::pluck('name', 'id')->all();
         $doctorsRDV = doctor::pluck('name', 'id')->all();
-
         $Heure = [      '0'=>'08:00 At 08:30',
                         '1'=>'08:30 At 09:00',
                         '2'=>'09:00 At 09:30',
@@ -80,10 +77,9 @@ class RendezVousController extends Controller
                         '13'=>'14:30 At 15:00'
 
         ];
-
-
-        return view('rendezvous.index', compact('servicesRDV', 'RendezVousPatient', 'doctorsRDV', 'Heure'));
+        return view('rendezvous.index', compact('servicesRDV', 'RendezVousPatient', 'doctorsRDV', 'Heure')); */
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -91,24 +87,53 @@ class RendezVousController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RendezVousRequest $request)
+    public function store(PatientRequest $request)
     {
-        $patient = Patient::create($request->all());
+        $verfieRendezvous = RendezVous::where('service_id', $request->service_id)->where('doctor_id', $request->doctor_id)->where('date_rdv', $request->date_rdv)->where('Heure', $request->Heure)->get()->all();
+
+        if (empty($verfieRendezvous)) {
+            $patient = Patient::create($request->all());
+
+            // $patient = Patient::findOrfail(46);
+            // $rendez = RendezVous::findOrfail(31);
+            $rendez = $request->rendezVous;
+            // return $rendez;
+            $rendezVous = new RendezVous;
+            $rendezVous->patient_id = $patient->id ;
+            $rendezVous->service_id = $request->service_id;
+            $rendezVous->doctor_id = $request->doctor_id;
+            $rendezVous->date_rdv = $request->date_rdv;
+            $rendezVous->Heure = $request->Heure;
+            $rendezVous->Duree = $request->Duree;
 
 
-        RendezVous::create([
+            $rendezVous->save();
 
-            'patient_id'=>$patient->id,
-            'service_id'=>$request->service_id,
-            'doctor_id'=>$request->doctor_id,
-            'date_rdv'=>$request->date_rdv,
-            'Heure'=>$request->Heure,
-            'Duree'=>$request->Duree
 
-        ]);
-        Session::flash('create_rdv_successful', 'Congrats , Your RendezVous Succseful');
 
-        return redirect('/');
+            // = RendezVous::create([
+            //     'patient_id'=>$patient->id,
+            //     'service_id'=>$request->service_id,
+            //     'doctor_id'=>$request->doctor_id,
+            //     'date_rdv'=>$request->date_rdv,
+            //     'Heure'=>$request->Heure,
+            //     'Duree'=>$request->Duree
+            // ]);
+
+
+            $BarCode = $rendezVous->date_rdv .''. $patient->id ;
+            Session::flash('create_rdv_successful', 'Congrats , Your RendezVous Succseful');
+            $modal = 'modal';
+            // $RendezVousPatient = $request->RendezVousPatient ;
+            // $doctors_Dis = $request->doctors_Dis ;
+            // $Heure = $request->Heure ;
+            // $doctorsRDV = $request->doctorsRDV ;
+            // $servicesRDV = $request->servicesRDV ;
+            return view('rendezvous.imprime', compact('BarCode', 'modal', 'rendezVous', 'patient'));
+        // return view('imprime', compact('rendez', 'BarCode'));
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -119,7 +144,7 @@ class RendezVousController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect()->back();
     }
 
     /**
@@ -153,7 +178,9 @@ class RendezVousController extends Controller
      */
     public function destroy($id)
     {
-        //
+        RendezVous::where('patient_id', $id)->delete();
+        Patient::findOrFail($id)->delete();
+        return redirect('/');
     }
 
     public function recherche(Request $request)
@@ -197,12 +224,6 @@ class RendezVousController extends Controller
                          '13'=>'14:30 At 15:00'
 
          ];
-
-
-
-
-
-
         // Validation Doctors Etat Disponible
         foreach ($doctors as $doctor) {
             $rendezvousDoctors = $doctor->rendezvouses;
@@ -232,7 +253,8 @@ class RendezVousController extends Controller
             }
 
             Session::flash('date_valid', 'your Date and Heure  Disponible ');
-            return view('rendezvous.index', compact('doctorsRDV', 'RendezVousPatient', 'servicesRDV', 'service', 'Heure', 'doctors_Dis', 'valid'));
+            $enable = 'Disabled';
+            return view('rendezvous.index', compact('doctorsRDV', 'RendezVousPatient', 'servicesRDV', 'service', 'Heure', 'doctors_Dis', 'valid', 'enable'));
         } else {
             if (Session::has('Heure_invalid') || Session::has('date_valid')) {
                 session()->forget(['Heure_invalid','date_valid']);
@@ -242,6 +264,36 @@ class RendezVousController extends Controller
             $servicesRDV = Service::pluck('name', 'id')->all();
             return view('rendezvous.index', compact('RendezVousPatient', 'servicesRDV', 'service', 'Heure', 'valid'));
         }
+    }
+    public function orderPdf(PatientRequest $request)
+    {
+        return 'hello world ';
+    }
+
+    public function valideRendezVous(Request $request)
+    {
+        $rendezVous = new RendezVous;
+        $rendezVous->date_rdv = $request->date_rdv;
+        $rendezVous->Heure = $request->Heure;
+        $rendezVous->service_id = $request->service_id;
+        $rendezVous->doctor_id = $request->doctor_id;
+        $rendezVous->Duree = 30;
+        $modal = '';
+
+        return view('rendezvous.create', compact('rendezVous', 'modal'));
+    }
+    public function chercher(Request $request)
+    {
+        $service = Service::findOrFail($request->service_id);
+        $doctors = $service->doctors;
+        $rendezvous = RendezVous::where('date_rdv', $request->date_rdv);
+        $date_rdv = $request->date_rdv;
+        $servicesRDV = Service::pluck('name', 'id')->all();
+
+
+        return view('rendezvous.edit', compact('doctors', 'service', 'rendezvous', 'date_rdv', 'servicesRDV'));
+
+        // return 'hello world';
     }
 }
 

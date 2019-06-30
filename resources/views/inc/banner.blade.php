@@ -32,11 +32,11 @@
         <div class="card-header">
             <h3>take appointment:</h3>
         </div>
-        <div class="container-fluid mt-1 card-body">
-            {!! Form::open(['method'=>'POST','action'=>'RendezVousController@recherche','class'=>'cmxform
+        <div class="container mt-1 card-body">
+            {!! Form::open(['method'=>'POST','action'=>'RendezVousController@chercher','class'=>'cmxform
             form-horizontal style-form ']) !!}
             <div class="row justify-content-between align-items-end">
-                <div class="col-6 col-md-2 col-lg-3">
+                <div class="col-6 col-md-3 col-lg-3">
 
                     {!! Form::label('date_rdv', 'Check In:', ['style'=>'display:block']) !!}
 
@@ -44,7 +44,7 @@
 
                 </div>
 
-                <div class="col-6 col-md-2">
+                {{--  <div class="col-6 col-md-2">
                     {!! Form::label('Horaire', 'Horaire:', ['style'=>'display:block']) !!}
                     {!! Form::select('Heure', [
                     '0'=>'08:00 At 08:30',
@@ -64,9 +64,9 @@
 
                     ], null, ['id'=>'Horaire','class'=>'form-control','required']) !!}
 
-                </div>
+                </div>  --}}
 
-                <div class="col-6 col-md-2">
+                <div class="col-6 col-md-3">
                     {!! Form::label('service_id', 'Services:', ['style'=>'display:block']) !!}
                     {!! Form::select('service_id',[''=>'Choise
                     Service']+$servicesRDV,null,['class'=>'form-control','required']) !!}
